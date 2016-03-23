@@ -9,5 +9,4 @@ WORKDIR /data/db/
 
 EXPOSE 27017 28017
 
-CMD [ "mongod", "--nojournal", "--httpinterface" ]
-
+CMD [ "mongod", "--nojournal", "--httpinterface", "--rest" ]
