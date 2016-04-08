@@ -2,6 +2,7 @@
 
 set -e
 
+IP=$(hostname -i)
 RACKDC_FILE="/var/lib/scylla/conf/cassandra-rackdc.properties"
 
 [ "$DC" != "" ] && echo dc=$DC >> $RACKDC_FILE
@@ -12,16 +13,19 @@ OPTS=""
 [ "$CLUSTER_NAME" != "" ] && \
     $OPTS=" --cluster-name $CLUSTER_NAME"
 [ "$SEEDS" != "" ] && \
-    $OPTS=" --seed-provider-parameters $SEEDS"
+    $OPTS=" --seed-provider-parameters $SEEDS" || \
+    $OPTS=" --seed-provider-parameters $IP"
 [ "$SNITCH" != "" ] && \
     $OPTS=" --endpoint-snitch $SNITCH"
 [ "$LISTEN_ADDRESS" != "" ] && \
-    $OPTS=" --listen-address $LISTEN_ADDRESS"
+    $OPTS=" --listen-address $LISTEN_ADDRESS" || \
+    $OPTS=" --listen-address $IP"
 [ "$BROADCAST_ADDRESS" != "" ] && \
     $OPTS=" --broadcast-address $BROADCAST_ADDRESS" && \
     $OPTS=" --broadcast-rpc-address $BROADCAST_ADDRESS"
 [ "$RPC_ADDRESS" != "" ] && \
-    $OPTS=" --rpc-address $RPC_ADDRESS"
+    $OPTS=" --rpc-address $RPC_ADDRESS" || \
+    $OPTS=" --rpc-address $IP"
 [ "$START_RPC" != "" ] && \
     $OPTS=" --start-rpc $START_RPC"
 [ "$API_ADDRESS" != "" ] && \
@@ -29,12 +33,11 @@ OPTS=""
 [ "$TOKENS" != "" ] && \
     $OPTS=" --num-tokens $TOKENS"
 
-su - -c "/usr/bin/scylla \
-            --log-to-syslog 1 \
-            --log-to-stdout 0 \
-            --developer-mode true \
-            --default-log-level info \
-            --options-file /var/lib/scylla/conf/scylla.yaml \
-            --network-stack posix \
-            $OPTS" \
-        scylla
+/usr/bin/scylla \
+    --log-to-syslog 1 \
+    --log-to-stdout 0 \
+    --developer-mode true \
+    --default-log-level info \
+    --options-file /var/lib/scylla/conf/scylla.yaml \
+    --network-stack posix \
+    $OPTS"
