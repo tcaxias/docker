@@ -11,27 +11,27 @@ echo prefer_local=true >> $RACKDC_FILE
 
 OPTS=""
 [ "$CLUSTER_NAME" != "" ] && \
-    $OPTS=" --cluster-name $CLUSTER_NAME"
+    OPTS="$OPTS --cluster-name $CLUSTER_NAME"
 [ "$SEEDS" != "" ] && \
-    $OPTS=" --seed-provider-parameters $SEEDS" || \
-    $OPTS=" --seed-provider-parameters $IP"
+    OPTS="$OPTS --seed-provider-parameters $SEEDS" || \
+    OPTS="$OPTS --seed-provider-parameters $IP"
 [ "$SNITCH" != "" ] && \
-    $OPTS=" --endpoint-snitch $SNITCH"
+    OPTS="$OPTS --endpoint-snitch $SNITCH"
 [ "$LISTEN_ADDRESS" != "" ] && \
-    $OPTS=" --listen-address $LISTEN_ADDRESS" || \
-    $OPTS=" --listen-address $IP"
+    OPTS="$OPTS --listen-address $LISTEN_ADDRESS" || \
+    OPTS="$OPTS --listen-address $IP"
 [ "$BROADCAST_ADDRESS" != "" ] && \
-    $OPTS=" --broadcast-address $BROADCAST_ADDRESS" && \
-    $OPTS=" --broadcast-rpc-address $BROADCAST_ADDRESS"
+    OPTS="$OPTS --broadcast-address $BROADCAST_ADDRESS" && \
+    OPTS="$OPTS --broadcast-rpc-address $BROADCAST_ADDRESS"
 [ "$RPC_ADDRESS" != "" ] && \
-    $OPTS=" --rpc-address $RPC_ADDRESS" || \
-    $OPTS=" --rpc-address $IP"
+    OPTS="$OPTS --rpc-address $RPC_ADDRESS" || \
+    OPTS="$OPTS --rpc-address $IP"
 [ "$START_RPC" != "" ] && \
-    $OPTS=" --start-rpc $START_RPC"
+    OPTS="$OPTS --start-rpc $START_RPC"
 [ "$API_ADDRESS" != "" ] && \
-    $OPTS=" --api-address $API_ADDRESS"
+    OPTS="$OPTS --api-address $API_ADDRESS"
 [ "$TOKENS" != "" ] && \
-    $OPTS=" --num-tokens $TOKENS"
+    OPTS="$OPTS --num-tokens $TOKENS"
 
 /usr/bin/scylla \
     --log-to-syslog 1 \
@@ -40,4 +40,4 @@ OPTS=""
     --default-log-level info \
     --options-file /var/lib/scylla/conf/scylla.yaml \
     --network-stack posix \
-    $OPTS"
+    $OPTS
