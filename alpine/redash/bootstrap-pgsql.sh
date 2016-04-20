@@ -1,13 +1,11 @@
 #!/bin/sh
 
+echo 'daemonize yes_save""' |tr '_' '\n' |redis-server -
 cd /opt/redash/current
 
-echo 'daemonize yes_save ""'|tr '_' '\n'|redis-server -
-
-nginx -c /$PWD/setup/docker/nginx/nginx.conf
-
-su postgres -c 'pg_ctl init -D /var/lib/pgsql/' && \
-    su postgres -c 'pg_ctl start -D /var/lib/pgsql/'
+chown -R postgres.postgres /var/lib/pgsql
+su postgres -c 'pg_ctl init -D /var/lib/pgsql/' || exit 1
+su postgres -c 'pg_ctl start -D /var/lib/pgsql/'
 
 until sudo -u postgres psql -c "select 1"; do sleep 1;done
 
@@ -25,4 +23,5 @@ $run_psql -c "grant select(id,name) ON users to redash_reader;"
 $run_psql -c "grant select on events, queries, dashboards, widgets, visualizations, query_results to redash_reader;"
 $run_redash /opt/redash/current/manage.py ds new -n "re:dash metadata" -t "pg" -o "{\"user\": \"redash_reader\", \"password\": \"redash_reader\", \"host\": \"postgres\", \"dbname\": \"postgres\"}"
 
-exec supervisord -c /opt/redash/supervisord/supervisord.conf
+su postgres -c 'pg_ctl stop -D /var/lib/pgsql/'
+echo 'SHUTDOWN NOSAVE'|redis-cli
