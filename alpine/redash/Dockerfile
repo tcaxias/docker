@@ -46,6 +46,9 @@ RUN apk del build-base git wget pwgen bash nodejs
 VOLUME [ "/var/lib/pgsql" ]
 EXPOSE 5000 9001
 
+RUN find / -name "*.py?" -exec rm -f {} \;
+RUN find / -name "*.a" -exec rm -f {} \;
+
 ADD extra-supervisord.conf /opt/redash/current
 RUN cat extra-supervisord.conf >> /opt/redash/supervisord/supervisord.conf
 CMD ["supervisord", "-c", "/opt/redash/supervisord/supervisord.conf"]
