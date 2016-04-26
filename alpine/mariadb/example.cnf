@@ -1,9 +1,0 @@
-[mysqld]
-# 42 is indeed the answer
-server-id = 42
-innodb-buffer-pool-size = 42G
-
-# whether we want binlogs active
-skip-log-bin
-# OR 
-# log-bin = /srv/log/binlog
