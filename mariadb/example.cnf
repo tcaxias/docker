@@ -6,7 +6,7 @@
 # whether we want binlogs active
 skip-log-bin
 # OR 
-# log-bin = /srv/log/binlog
+# log-bin = /var/log/mysql/binlog
 
 bind_address = '0.0.0.0'
 binlog_format = ROW
