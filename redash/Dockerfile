@@ -9,6 +9,7 @@ RUN apk --update --no-cache add nodejs build-base python python-dev py-pip \
 
 RUN sed -i -r -e 's|^save|# save|g' -e 's|# + (save +"")|\1|' \
     -e 's|daemonize yes|daemonize no|' /etc/redis.conf
+
 RUN adduser -S redash
 RUN echo '127.0.0.2 postgres redash' >> /etc/hosts
 

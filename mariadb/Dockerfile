@@ -28,11 +28,11 @@ RUN mkdir -p \
     /etc/mysql/conf.d \
     /run/mysqld
 
-VOLUME [ "/var/lib/mysql", "/var/log/mysql", "/etc/mysql/conf.d" ]
+VOLUME [ "/var/lib/mysql", "/var/log/mysql", "/etc/mysql/conf.d", "/var/run/mysqld" ]
 
 ADD start_mysql.sh /opt
 RUN chmod +x /opt/start_mysql.sh
 
-CMD [ "/opt/start_mysql.sh", "--console", "--log_output=/dev/stdout", "--log_error=/dev/sterr" ]
+CMD [ "/opt/start_mysql.sh", "--console", "--skip-syslog" ]
 
 ENV TERM=xterm
