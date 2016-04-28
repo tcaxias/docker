@@ -17,12 +17,12 @@ innodb_flush_log_at_trx_commit = 0
 
 # CHANGE THESE ACCORDINGLY #
 port = 3111
+wsrep_on = ON
 wsrep_node_address = 10.0.0.3:3113
 wsrep_sst_receive_address  =  10.0.0.3:3112
 wsrep_cluster_address = 'gcomm://10.0.0.1:1113'
 # ######################## #
 
-wsrep_on = ON
 wsrep_provider = '/usr/lib/galera/libgalera_smm.so'
 wsrep_cluster_name = 'test'
 wsrep_slave_threads = 24
