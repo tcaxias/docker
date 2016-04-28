@@ -1,4 +1,5 @@
 # re:dash dockerfile
+
 FROM alpine:edge
 MAINTAINER Tiago Caxias http://github.com/tcaxias
 
@@ -45,7 +46,7 @@ RUN [ -e /var/lib/pgsql/postgresql.conf ] || /opt/redash/current/bootstrap-pgsql
 RUN apk del build-base git wget pwgen bash nodejs
 
 VOLUME [ "/var/lib/pgsql" ]
-EXPOSE 5000 9001
+EXPOSE 5000 5432 9001
 
 RUN find / -name "*.py?" -exec rm -f {} \;
 RUN find / -name "*.a" -exec rm -f {} \;
