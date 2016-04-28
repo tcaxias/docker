@@ -1,17 +1,38 @@
-FROM alpine:edge
-MAINTAINER Tiago Caxias <tiago.caxias@yahoo.ca>
+# Container for MariaDB 10.1 with optional Galera
+# Refined by the great work at https://github.com/paulczar/docker-percona_galera
 
-RUN apk --no-cache --update add mariadb
-RUN mkdir -p /srv/data /srv/log /etc/mysql/conf.d /run/mysqld
-RUN mysql_install_db --datadir='/srv/data/'
-RUN chown -R mysql.mysql /srv /run/mysqld
-RUN echo '!includedir /etc/mysql/conf.d/' >> /etc/mysql/my.cnf
-RUN find / -name "*.a" -exec rm -f {} \;
-RUN rm -f /srv/data/ib_logfile?
+FROM debian:jessie-backports
+MAINTAINER Tiago Caxias http://github.com/tcaxias
 
-VOLUME [ "/srv/data", "/srv/log", "/etc/mysql/conf.d" ]
+WORKDIR /tmp
 
-EXPOSE 3306
+ENV DEBIAN_FRONTEND=noninteractive APT="apt-get -yqq --no-install-recommends"
+RUN \
+    $APT update && \
+    $APT upgrade && \
+    apt-key adv --recv-keys --keyserver keyserver.ubuntu.com 0xcbcb082a1bb943db && \
+    echo 'deb [arch=amd64] http://mirrors.fe.up.pt/pub/mariadb/repo/10.1/debian wheezy main' \
+        > /etc/apt/sources.list.d/mariadb.list && \
+    $APT install wget && \
+    wget http://repo.percona.com/apt/percona-release_0.1-3.jessie_all.deb && \
+    dpkg -i percona-release_0.1-3.jessie_all.deb && \
+    $APT update && \
+    $APT install \
+        percona-xtrabackup-24 \
+        mariadb-server-10.1 \
+        socat && \
+    rm -rf /var/lib/apt/lists/* && \
+    rm -rf /var/lib/mysql/*
 
-USER mysql
-CMD [ "mysqld", "--console", "--datadir=/srv/data/" ]
+RUN mkdir -p \
+    /etc/mysql/conf.d \
+    /run/mysqld
+
+VOLUME [ "/var/lib/mysql", "/var/log/mysql", "/etc/mysql/conf.d" ]
+
+ADD start_mysql.sh /opt
+RUN chmod +x /opt/start_mysql.sh
+
+CMD [ "/opt/start_mysql.sh", "--console" ]
+
+ENV TERM=xterm

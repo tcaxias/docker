@@ -1,5 +1,6 @@
 # re:dash dockerfile
 FROM alpine:edge
+MAINTAINER Tiago Caxias http://github.com/tcaxias
 
 RUN apk --update --no-cache add nodejs build-base python python-dev py-pip \
     curl pwgen sudo git wget libffi-dev postgresql-dev mariadb-dev nasm file \
