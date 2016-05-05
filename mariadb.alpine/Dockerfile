@@ -6,14 +6,19 @@ MAINTAINER Tiago Caxias http://github.com/tcaxias
 
 WORKDIR /tmp
 
-ENV APK="apk --update --no-cache" DEPS="mariadb-dev python-dev build-base py-pip" PKGS="mariadb rsync bash"
+ENV APK="apk --update --no-cache" PKGS="mariadb rsync bash supervisor" \
+    DEPS="mariadb-dev python-dev build-base py-pip"
+
 RUN $APK add $DEPS $PKGS && \
     pip install MySQL-python && \
-    $APK del $DEPS
+    $APK del $DEPS && \
+    find / -name "*.py?" -exec rm -f {} \; && \
+    find / -name "*.a" -exec rm -f {} \;
 
 RUN mkdir -p \
     /etc/mysql/conf.d \
-    /run/mysqld
+    /run/mysqld \
+    /var/run/mysqld/tmp
 
 VOLUME [ "/var/lib/mysql", "/var/log/mysql", "/etc/mysql/conf.d", "/var/run/mysqld" ]
 
