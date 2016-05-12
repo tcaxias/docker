@@ -4,27 +4,38 @@
 FROM alpine:edge
 MAINTAINER Tiago Caxias http://github.com/tcaxias
 
-WORKDIR /tmp
-
-ENV APK="apk --update --no-cache" PKGS="mariadb rsync bash supervisor" \
-    DEPS="mariadb-dev python-dev build-base py-pip"
-
-RUN $APK add $DEPS $PKGS && \
-    pip install MySQL-python && \
-    $APK del $DEPS && \
-    find / -name "*.py?" -exec rm -f {} \; && \
-    find / -name "*.a" -exec rm -f {} \;
+ENV \
+    APK="apk --update --no-cache" \
+    PKGS="mariadb mariadb-client rsync supervisor dropbear" \
+    DEPS="git"
 
 RUN mkdir -p \
     /etc/mysql/conf.d \
     /run/mysqld \
-    /var/run/mysqld/tmp
+    /var/run/mysqld/tmp \
+    /opt
+
+WORKDIR /tmp
+
+RUN $APK add $PKGS $DEPS && \
+    git clone https://github.com/tcaxias/utils.git && \
+    apk del $DEPS && \
+    find / -name "*.a" -exec rm -f {} \; && \
+    mv \
+        utils/tcp_listen/tcp_listen.sh \
+        utils/get_mysql_port/get_mysql_port.sh \
+        utils/mysql_supervisord/supervisord.conf \
+        utils/mysql_monitor/mysql_monitor.sh \
+        utils/start_mysql/start_mysql.sh \
+        /opt && \
+    rm -rf utils
+
+WORKDIR /opt
 
 VOLUME [ "/var/lib/mysql", "/var/log/mysql", "/etc/mysql/conf.d", "/var/run/mysqld" ]
 
-ADD start_mysql.sh /
-RUN chmod +x /start_mysql.sh
+RUN chmod +x /opt/*.sh
 
-CMD [ "/start_mysql.sh", "--console", "--skip-syslog" ]
+CMD [ "supervisord", "-c", "/opt/supervisord.conf" ]
 
 ENV TERM=xterm
