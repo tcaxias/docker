@@ -33,6 +33,7 @@ RUN $APK add $PKGS $DEPS && \
 
 RUN echo '!includedir /etc/mysql/conf.d/' >> /etc/mysql/my.cnf
 VOLUME [ "/var/lib/mysql", "/var/log/mysql", "/etc/mysql/conf.d", "/var/run/mysqld" ]
+
 RUN chmod +x /opt/*.sh
 CMD [ "supervisord", "-c", "/opt/supervisord.conf" ]
 

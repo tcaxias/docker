@@ -1,4 +1,8 @@
+[client]
+socket = '/var/run/mysqld/mysqld.sock'
+
 [mysqld]
+socket = '/var/run/mysqld/mysqld.sock'
 # 42 is indeed the answer
 #server-id = 42
 #innodb-buffer-pool-size = 42G
