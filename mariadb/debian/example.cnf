@@ -16,7 +16,7 @@ query_cache_size = 0
 innodb_flush_log_at_trx_commit = 0
 
 # CHANGE THESE ACCORDINGLY #
-port = 3111
+port = 3306
 wsrep_on = OFF
 wsrep_node_address = 10.0.0.3:3113
 wsrep_sst_receive_address  =  10.0.0.3:3112
