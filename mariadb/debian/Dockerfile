@@ -1,6 +1,5 @@
 # Container for MariaDB 10.1
 # Refined by the great work at https://github.com/paulczar/docker-percona_galera
-
 FROM debian:jessie-backports
 MAINTAINER Tiago Caxias http://github.com/tcaxias
 
@@ -18,7 +17,8 @@ RUN mkdir -p \
         /etc/mysql/conf.d \
         /run/mysqld \
         /var/run/mysqld/tmp \
-        /opt
+        /opt \
+        /root/.ssh
 
 RUN \
     $APT update && \
