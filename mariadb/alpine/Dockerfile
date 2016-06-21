@@ -13,6 +13,7 @@ ENV \
 
 RUN \
     $APK add $PKGS && \
+    touch /root/.my.cnf && \
     mkdir -p \
         /etc/mysql/conf.d \
         /run/mysqld \
@@ -38,7 +39,6 @@ RUN \
 
 RUN echo '!includedir /etc/mysql/conf.d/' >> /etc/mysql/my.cnf
 VOLUME [ "/var/lib/mysql", "/var/log/mysql", "/etc/mysql/conf.d", "/var/run/mysqld" ]
-
 CMD [ "supervisord", "-c", "/usr/local/bin/supervisord.conf", "-j", "/dev/shm/supervisor.pid", "-l", "/dev/null" ]
 
 ENV TERM=xterm

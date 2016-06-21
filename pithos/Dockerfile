@@ -15,6 +15,7 @@ ADD \
     https://github.com/exoscale/pithos/releases/download/0.7.5/pithos-0.7.5-standalone.jar \
     https://raw.githubusercontent.com/exoscale/pithos/master/doc/pithos.yaml \
     /app/
+RUN mv /app/pithos*.jar /app/pithos.jar
 
 EXPOSE 8080
 CMD [ "java", "-jar", "/app/pithos.jar", "-f", "/app/pithos.yaml" ]
