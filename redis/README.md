@@ -10,4 +10,5 @@ You may run this using:
 
     docker run -d --net host tcx/redis
 or
+
     docker run -d --net host -e PASSWD=MySuPeRdUpErPaSsW0rD tcx/redis
