@@ -2,7 +2,6 @@ FROM alpine:edge
 MAINTAINER Tiago Caxias http://github.com/tcaxias
 
 RUN apk --no-cache --update add redis
-WORKDIR /tmp
 
 ENV CONF "daemonize no | save "" |"
 

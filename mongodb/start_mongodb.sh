@@ -1,6 +1,6 @@
 #!/bin/sh
 
-if [ "_$PASS" != "_" ] ;
+if [ "_$PASSWD" != "_" ] ;
 then
 mongod --fork --syslog && \
     until { echo 'show dbs' | mongo; } ; do sleep 1 ; done && \
