@@ -1,6 +1,6 @@
 # A simple container for MongoDB
 
-Please find orchestrator at https://github.com/mongodb/mongo
+Please find mongodb at https://github.com/mongodb/mongo
 
 Docs at https://docs.mongodb.com/
 

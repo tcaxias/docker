@@ -1,6 +1,6 @@
 # A simple container for Redis
 
-Please find orchestrator at https://github.com/antirez/redis
+Please find redis at https://github.com/antirez/redis
 
 Docs at http://redis.io/documentation
 
