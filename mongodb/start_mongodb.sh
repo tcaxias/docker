@@ -1,5 +1,6 @@
 #!/bin/sh
 
+AUTH=""
 if [ "_$PASSWD" != "_" ] ;
 then
 mongod --fork --syslog && \
@@ -8,8 +9,9 @@ mongod --fork --syslog && \
         "user:\"admin\",pwd:\"$PASSWD\"," \
         "roles:[{role:\"userAdminAnyDatabase\",db:\"admin\"}]}) ;" \
     | tr ';' '\n' \
-    | mongo \
-    && mongod --shutdown
+    | mongo && \
+    mongod --shutdown && \
+    AUTH="--auth"
 fi
 
-exec mongod --auth --nojournal --httpinterface --rest
+exec mongod $AUTH --nojournal --httpinterface --rest
