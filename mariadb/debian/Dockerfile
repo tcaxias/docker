@@ -6,7 +6,7 @@ MAINTAINER Tiago Caxias http://github.com/tcaxias
 ENV \
     DEBIAN_FRONTEND=noninteractive \
     APT="apt -yqq --no-install-recommends" \
-    PKGS="percona-xtrabackup-24 mariadb-server-10.1 supervisor socat dropbear" \
+    PKGS="percona-xtrabackup-24 mariadb-server-10.1 supervisor socat dropbear tzdata" \
     GIT_SSL_NO_VERIFY=true \
     DEPS="git golang" \
     GOPATH="/tmp/go" \
@@ -38,6 +38,15 @@ RUN \
     apt-get -yqq autoremove && \
     rm -rf /var/lib/apt/lists/* && \
     rm -rf /var/lib/mysql/* && \
+    find / -name "*.a" -exec rm -f {} \;
+
+RUN head -1 /etc/apt/sources.list | sed 's|jessie|unstable|g' \
+        > /etc/apt/sources.list.d/sid.list && \
+    echo 'Package: *|Pin: release a=unstable|Pin-Priority: 600||Package: *|Pin: release a=stable|Pin-Priority: 700|' | tr '|' '\n' \
+        > /etc/apt/preferences.d/sid && \
+    $APT update && \
+    $APT install -t sid tzdata && \
+    rm -f /etc/apt/preferences.d/sid /etc/apt/sources.list.d/sid.list && \
     find / -name "*.a" -exec rm -f {} \;
 
 ADD \
