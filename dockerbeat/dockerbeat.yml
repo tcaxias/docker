@@ -190,12 +190,12 @@ output:
 
 
   ### File as output
-  #file:
+  file:
     # Path to the directory where to save the generated files. The option is mandatory.
-    #path: "/tmp/dockerbeat"
+    path: "/tmp/dockerbeat"
 
     # Name of the generated files. The default is `dockerbeat` and it generates files: `dockerbeat`, `dockerbeat.1`, `dockerbeat.2`, etc.
-    #filename: dockerbeat
+    filename: dockerbeat
 
     # Maximum size in kilobytes of each file. When this size is reached, the files are
     # rotated. The default value is 10240 kB.
