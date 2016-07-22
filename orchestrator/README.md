@@ -10,4 +10,4 @@ For a container environment (mesos, k8s, swarm, ...) make use of the /api/status
 
 You may run this using:
 
-    docker run -d --net host -v $PWD/orchestrator.conf.json:/etc/orchestrator.conf.json:ro tcx/orchestrator
+    docker run -d --net host -v $PWD/orchestrator.conf.json:/etc/orchestrator.conf.json:ro tcaxias/orchestrator

@@ -8,7 +8,7 @@ define PASSWD env variable if you wish authentication.
 
 You may run this using:
 
-    docker run -d --net host tcx/redis
+    docker run -d --net host tcaxias/redis
 or
 
-    docker run -d --net host -e PASSWD=MySuPeRdUpErPaSsW0rD tcx/redis
+    docker run -d --net host -e PASSWD=MySuPeRdUpErPaSsW0rD tcaxias/redis
