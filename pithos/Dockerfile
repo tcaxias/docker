@@ -6,18 +6,21 @@ MAINTAINER Tiago Caxias http://github.com/tcaxias
 
 ENV \
     APK="apk --update --no-cache" \
-    PKGS="openjdk8"
+    PKGS="openjdk8" \
+    TERM="xterm" \
+    DEPS="wget" \
+    PITHOS_VERSION="0.7.5"
 
-RUN $APK add $PKGS
 WORKDIR /app
 
-ADD \
-    https://github.com/exoscale/pithos/releases/download/0.7.5/pithos-0.7.5-standalone.jar \
-    https://raw.githubusercontent.com/exoscale/pithos/master/doc/pithos.yaml \
-    /app/
-RUN mv /app/pithos*.jar /app/pithos.jar
+RUN \
+    $APK add $PKGS $DEPS && \
+    wget https://github.com/exoscale/pithos/releases/download/${PITHOS_VERSION}/pithos-${PITHOS_VERSION}-standalone.jar \
+        -O /app/pithos.jar && \
+    apk del $DEPS && \
+    rm -rf /var/cache/apk
+
+ADD pithos.yaml /app/
 
 EXPOSE 8080
 CMD [ "java", "-jar", "/app/pithos.jar", "-f", "/app/pithos.yaml" ]
-
-ENV TERM=xterm
