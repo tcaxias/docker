@@ -7,7 +7,7 @@ ENV \
     EXPORTER="github.com/oliver006/redis_exporter" \
     CONF="daemonize no |save \"''\"|" \
     PKGS="supervisor redis" \
-    DEPS="git go" \
+    DEPS="git go build-base" \
     GOPATH="/tmp/go" \
     PASSWD=""
 
