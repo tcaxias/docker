@@ -8,7 +8,7 @@ ENV \
     APT="apt -yqq --no-install-recommends" \
     PKGS="percona-xtrabackup-24 mariadb-server-10.1 supervisor socat dropbear tzdata" \
     GIT_SSL_NO_VERIFY=true \
-    DEPS="git golang" \
+    DEPS="git golang apt-transport-https wget" \
     GOPATH="/tmp/go" \
     SSH="ssh -oStrictHostKeyChecking=no"
 
@@ -20,17 +20,18 @@ RUN touch /root/.my.cnf && \
         /usr/local/bin \
         /root/.ssh
 
-ADD "http://repo.percona.com/apt/percona-release_0.1-3.jessie_all.deb" /
-
 RUN \
+    $APT update && \
+    $APT install $DEPS && \
     apt-key adv --recv-keys --keyserver keyserver.ubuntu.com 0xcbcb082a1bb943db && \
-    echo 'deb [arch=amd64] http://mirrors.fe.up.pt/pub/mariadb/repo/10.1/debian wheezy main' \
+    echo 'deb [arch=amd64] http://lon1.mirrors.digitalocean.com/mariadb/repo/10.1/debian jessie main' \
         > /etc/apt/sources.list.d/mariadb.list && \
-    dpkg -i /percona-release_0.1-3.jessie_all.deb && \
-    rm -f /percona-release_0.1-3.jessie_all.deb && \
+    apt-key adv --keyserver keys.gnupg.net --recv-keys 1C4CBDCDCD2EFD2A && \
+    echo 'deb [arch=amd64] http://repo.percona.com/apt jessie main' \
+        > /etc/apt/sources.list.d/percona.list && \
     $APT update && \
     $APT upgrade && \
-    $APT install $PKGS $DEPS && \
+    $APT install $PKGS && \
     go get github.com/prometheus/mysqld_exporter && \
     mv $GOPATH/bin/mysqld_exporter /usr/local/bin && \
     rm -rf $GOPATH && \
