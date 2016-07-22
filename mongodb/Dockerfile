@@ -6,7 +6,7 @@ WORKDIR /app
 ENV \
     EXPORTER="github.com/dcu/mongodb_exporter" \
     PKGS="supervisor mongodb" \
-    DEPS="git go" \
+    DEPS="git go build-base" \
     GOPATH="/tmp/go" \
     PASSWD=""
 
