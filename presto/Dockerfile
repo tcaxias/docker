@@ -1,22 +1,24 @@
 FROM alpine:edge
 MAINTAINER Tiago Caxias http://github.com/tcaxias
 
-ENV PKGS="less wget python openjdk8-jre-base" TERM=xterm
+ENV \
+    PKGS="python openjdk8-jre-base" \
+    DEPS="wget" \
+    TERM=xterm \
+    APK="apk --update --cache" \
+    PRESTO_VERSION="0.151"
 
 RUN \
-    cat /etc/apk/repositories | \
-        sed -e 's|-cdn|-4|g' -e 's|main|testing|g' \
-        >> /etc/apk/repositories && \
-    apk --no-cache --update add $PKGS
-
-RUN \
-    mkdir -p /opt/presto /var/presto/data && \
-    wget -q -O- https://repo1.maven.org/maven2/com/facebook/presto/presto-server/0.146/presto-server-0.146.tar.gz \
+    apk --no-cache --update add $PKGS $DEPS && \
+    mkdir -p /app /var/presto/data && \
+    wget -q -O- \
+        https://repo1.maven.org/maven2/com/facebook/presto/presto-server/${PRESTO_VERSION}/presto-server-${PRESTO_VERSION}.tar.gz \
         | tar -xzvC /tmp/ && \
-    mv /tmp/presto-*/* /opt/presto && \
-    rm -rf /tmp/*
+    mv /tmp/presto-*/* /app && \
+    apk del wget && \
+    rm -rf /tmp/* /var/cache/apk
 
-WORKDIR /opt/presto
-VOLUME /opt/presto/etc
+WORKDIR /app/
+VOLUME /app/etc
 
-CMD [ "/opt/presto/bin/launcher", "run" ]
+CMD [ "/app/bin/launcher", "run" ]

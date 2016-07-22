@@ -40,15 +40,6 @@ RUN \
     rm -rf /var/lib/mysql/* && \
     find / -name "*.a" -exec rm -f {} \;
 
-RUN head -1 /etc/apt/sources.list | sed 's|jessie|unstable|g' \
-        > /etc/apt/sources.list.d/sid.list && \
-    echo 'Package: *|Pin: release a=unstable|Pin-Priority: 600||Package: *|Pin: release a=stable|Pin-Priority: 700|' | tr '|' '\n' \
-        > /etc/apt/preferences.d/sid && \
-    $APT update && \
-    $APT install -t sid tzdata && \
-    rm -f /etc/apt/preferences.d/sid /etc/apt/sources.list.d/sid.list && \
-    find / -name "*.a" -exec rm -f {} \;
-
 ADD \
     https://raw.githubusercontent.com/tcaxias/utils/master/dropbear/dropbear.sh \
     https://raw.githubusercontent.com/tcaxias/utils/master/get_mysql_port/get_mysql_port.sh \

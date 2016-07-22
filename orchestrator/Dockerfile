@@ -1,19 +1,23 @@
-# Container for MariaDB 10.1
-# Refined by the great work at https://github.com/paulczar/docker-percona_galera
-
 FROM debian:jessie-backports
 MAINTAINER Tiago Caxias http://github.com/tcaxias
 
 ENV \
     DEBIAN_FRONTEND=noninteractive \
-    TERM=xterm
+    TERM=xterm \
+    DEPS="wget" \
+    APT="apt -yqq" \
+    ORCHESTRATOR_VERSION="1.4.590"
 
-ADD \
-    https://github.com/outbrain/orchestrator/releases/download/v1.4.590/orchestrator-cli_1.4.590_amd64.deb \
-    https://github.com/outbrain/orchestrator/releases/download/v1.4.590/orchestrator_1.4.590_amd64.deb \
-    /tmp/
-
-RUN for i in /tmp/*.deb; do dpkg -i $i ; done
+RUN \
+    $APT update && \
+    $APT install wget && \
+    wget \
+        https://github.com/outbrain/orchestrator/releases/download/v${ORCHESTRATOR_VERSION}/orchestrator-cli_${ORCHESTRATOR_VERSION}_amd64.deb \
+        https://github.com/outbrain/orchestrator/releases/download/v${ORCHESTRATOR_VERSION}/orchestrator_${ORCHESTRATOR_VERSION}_amd64.deb && \
+    for i in /*.deb; do dpkg -i $i ; done && \
+    rm -f *.deb && \
+    $APT purge wget && \
+    apt-get -yqq autoremove
 
 WORKDIR "/usr/local/orchestrator"
 
