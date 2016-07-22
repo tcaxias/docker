@@ -4,3 +4,9 @@
 [submodule "mariadb.debian/utils"]
 	path = mariadb.debian/utils
 	url = git@github.com:tcaxias/utils.git
+[submodule "mariadb/alpine/utils"]
+	path = mariadb/alpine/utils
+	url = git@github.com:tcaxias/utils.git
+[submodule "mariadb/debian/utils"]
+	path = mariadb/debian/utils
+	url = git@github.com:tcaxias/utils.git
