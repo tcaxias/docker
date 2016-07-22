@@ -6,7 +6,7 @@ MAINTAINER Tiago Caxias http://github.com/tcaxias
 ENV \
     APK="apk --update --no-cache" \
     PKGS="mariadb mariadb-client supervisor dropbear openssh-client" \
-    DEPS="git go gcc" \
+    DEPS="git go build-base" \
     GIT_SSL_NO_VERIFY=true \
     GOPATH="/tmp/go" \
     SSH="ssh -oStrictHostKeyChecking=no"
