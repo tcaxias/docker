@@ -10,7 +10,8 @@ ENV \
     GIT_SSL_NO_VERIFY=true \
     DEPS="git golang apt-transport-https wget" \
     GOPATH="/tmp/go" \
-    SSH="ssh -oStrictHostKeyChecking=no"
+    SSH="ssh -oStrictHostKeyChecking=no" \
+    CHECK_TZ=0
 
 RUN touch /root/.my.cnf && \
     mkdir -p \

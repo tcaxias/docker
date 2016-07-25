@@ -9,7 +9,8 @@ ENV \
     DEPS="git go build-base" \
     GIT_SSL_NO_VERIFY=true \
     GOPATH="/tmp/go" \
-    SSH="ssh -oStrictHostKeyChecking=no"
+    SSH="ssh -oStrictHostKeyChecking=no" \
+    CHECK_TZ=0
 
 RUN \
     $APK add $PKGS && \
