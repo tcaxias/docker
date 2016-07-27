@@ -1,5 +1,7 @@
-FROM alpine:latest
-MAINTAINER luis.almeida@jumia.com
+# Based on the work by Luís Almeida
+FROM alpine:edge
+MAINTAINER Tiago Caxias http://github.com/tcaxias
+WORKDIR /app
 
 VOLUME /data
 EXPOSE 8888
@@ -7,9 +9,8 @@ EXPOSE 8888
 ENV \
     TERM="xterm" \
     PKGS="supervisor py-curl jpeg zlib nginx" \
-    DEPS="build-base python-dev py-pip zlib-dev jpeg-dev"
-
-RUN mkdir -p /opt/thumbor/logs/
+    DEPS="build-base python-dev py-pip zlib-dev jpeg-dev" \
+    THUMBOR_INSTANCES="4"
 
 RUN apk add --update $DEPS $PKGS && \
     pip install thumbor && \
@@ -21,5 +22,3 @@ ADD supervisord.conf /etc/
 ADD nginx.conf /etc/
 
 CMD [ "supervisord", "-c", "/etc/supervisord.conf"]
-
-WORKDIR /opt/thumbor/
