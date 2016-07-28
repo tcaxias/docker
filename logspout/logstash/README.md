@@ -1,4 +1,4 @@
-# A simple container for logspout
+# A simple container for logspout to logstash
 
 Please find logspout at https://github.com/gliderlabs/logspout
 
