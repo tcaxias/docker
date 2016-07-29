@@ -13,7 +13,7 @@ RUN \
     mkdir -p /app /var/presto/data && \
     wget -q -O- \
         https://repo1.maven.org/maven2/com/facebook/presto/presto-server/${PRESTO_VERSION}/presto-server-${PRESTO_VERSION}.tar.gz \
-        | tar -xzvC /tmp/ && \
+        | tar -xzC /tmp/ && \
     mv /tmp/presto-*/* /app && \
     apk del wget && \
     rm -rf /tmp/* /var/cache/apk
