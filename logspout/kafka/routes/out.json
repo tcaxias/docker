@@ -1,7 +1,0 @@
-{
-  "id": "out",
-  "adapter": "kafka",
-  "filter_name": "*",
-  "filter_sources": ["stdout"],
-  "address": "127.0.0.1:9092/docker-stdout"
-}
