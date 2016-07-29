@@ -1,0 +1,7 @@
+{
+  "id": "mariadb",
+  "adapter": "kafka",
+  "filter_name": "mariadb_*",
+  "filter_sources": ["stderr", "stdout"],
+  "address": "127.0.0.1:9092/docker-dbs"
+}

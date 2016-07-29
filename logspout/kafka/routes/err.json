@@ -1,0 +1,7 @@
+{
+  "id": "err",
+  "adapter": "kafka",
+  "filter_name": "*",
+  "filter_sources": ["stderr"],
+  "address": "127.0.0.1:9092/docker-stderr"
+}
