@@ -11,6 +11,12 @@ ENV \
     DEPS="build-base python-dev py-pip zlib-dev jpeg-dev" \
     THUMBOR_INSTANCES="4"
 
+# thumbor+aws
+#RUN apk add --update $DEPS $PKGS && \
+#    pip install tc_aws && \
+#    apk del $DEPS && \
+#    rm -rf /var/cache/apk/*
+
 RUN apk add --update $DEPS $PKGS && \
     pip install thumbor && \
     apk del $DEPS && \
@@ -19,6 +25,7 @@ RUN apk add --update $DEPS $PKGS && \
 ADD thumbor.conf /etc/
 ADD supervisord.conf /etc/
 ADD nginx.conf /etc/
+VOLUME [ '/data' , '/data' ]
 
 CMD [ "supervisord", "-c", "/etc/supervisord.conf"]
 
