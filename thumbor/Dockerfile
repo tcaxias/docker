@@ -11,14 +11,8 @@ ENV \
     DEPS="build-base python-dev py-pip zlib-dev jpeg-dev" \
     THUMBOR_INSTANCES="4"
 
-# thumbor+aws
-#RUN apk add --update $DEPS $PKGS && \
-#    pip install tc_aws && \
-#    apk del $DEPS && \
-#    rm -rf /var/cache/apk/*
-
 RUN apk add --update $DEPS $PKGS && \
-    pip install thumbor && \
+    pip install thumbor tc_aws && \
     apk del $DEPS && \
     rm -rf /var/cache/apk/*
 
