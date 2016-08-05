@@ -7,7 +7,6 @@ MAINTAINER Tiago Caxias http://github.com/tcaxias
 ENV \
     APK="apk --update --no-cache" \
     PKGS="openjdk8" \
-    TERM="xterm" \
     DEPS="wget" \
     PITHOS_VERSION="0.7.5"
 
@@ -24,3 +23,5 @@ ADD pithos.yaml /app/
 
 EXPOSE 8080
 CMD [ "java", "-jar", "/app/pithos.jar", "-f", "/app/pithos.yaml" ]
+
+ENV TERM="xterm"

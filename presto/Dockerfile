@@ -4,7 +4,6 @@ MAINTAINER Tiago Caxias http://github.com/tcaxias
 ENV \
     PKGS="python openjdk8-jre-base" \
     DEPS="wget" \
-    TERM=xterm \
     APK="apk --update --cache" \
     PRESTO_VERSION="0.151"
 
@@ -22,3 +21,5 @@ WORKDIR /app/
 VOLUME /app/etc
 
 CMD [ "/app/bin/launcher", "run" ]
+
+ENV TERM=xterm

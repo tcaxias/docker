@@ -3,7 +3,6 @@ MAINTAINER Tiago Caxias http://github.com/tcaxias
 
 ENV \
     DEBIAN_FRONTEND=noninteractive \
-    TERM=xterm \
     DEPS="wget" \
     APT="apt -yqq" \
     ORCHESTRATOR_VERSION="1.4.590"
@@ -23,3 +22,5 @@ WORKDIR "/usr/local/orchestrator"
 
 EXPOSE 3000
 CMD [ "./orchestrator", "--debug", "--stack", "http" ]
+
+ENV TERM=xterm

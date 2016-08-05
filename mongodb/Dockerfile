@@ -32,4 +32,5 @@ RUN chmod +x /app/*.sh
 VOLUME /data/db/
 EXPOSE 27017 28017 9104
 CMD [ "supervisord", "-c", "/app/supervisord.conf", "-j", "/dev/shm/supervisor.pid", "-l", "/dev/null" ]
+
 ENV TERM=xterm

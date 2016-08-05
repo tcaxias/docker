@@ -7,7 +7,6 @@ VOLUME /data
 EXPOSE 8888
 
 ENV \
-    TERM="xterm" \
     PKGS="supervisor py-curl jpeg zlib nginx" \
     DEPS="build-base python-dev py-pip zlib-dev jpeg-dev" \
     THUMBOR_INSTANCES="4"
@@ -22,3 +21,5 @@ ADD supervisord.conf /etc/
 ADD nginx.conf /etc/
 
 CMD [ "supervisord", "-c", "/etc/supervisord.conf"]
+
+ENV TERM="xterm"

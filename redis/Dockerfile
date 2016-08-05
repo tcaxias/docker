@@ -28,4 +28,5 @@ RUN chmod +x /app/*.sh
 
 EXPOSE 6379 9104
 CMD [ "supervisord", "-c", "/app/supervisord.conf", "-j", "/dev/shm/supervisor.pid", "-l", "/dev/null" ]
+
 ENV TERM=xterm

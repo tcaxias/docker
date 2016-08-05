@@ -22,4 +22,5 @@ RUN \
 
 COPY dockerbeat.yml /app
 CMD [ "/app/dockerbeat", "-c", "/app/dockerbeat.yml", "-e" ]
+
 ENV term=xterm
