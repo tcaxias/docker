@@ -19,9 +19,9 @@ RUN \
     apk del $DEPS && \
     rm -rf /var/cache/apk
 
-ADD pithos.yaml /app/
+ADD pithos.yaml /conf/
 
 EXPOSE 8080
-CMD [ "java", "-jar", "/app/pithos.jar", "-f", "/app/pithos.yaml" ]
+CMD [ "java", "-jar", "/app/pithos.jar", "-f", "/conf/pithos.yaml" ]
 
 ENV TERM="xterm"
