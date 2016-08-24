@@ -1,15 +1,21 @@
 FROM alpine:edge
 MAINTAINER Tiago Caxias http://github.com/tcaxias
 
-ENV APK="apk --update --no-cache"
-WORKDIR /tmp
+ENV \
+    DEPS="git go build-base mksh" \
+    APK="apk --update --no-cache" \
+    GOPATH="/tmp/go" \
+    TOOLS="mongodump mongorestore"
 
 RUN \
-    $APK add git go mksh && \
+    cd /tmp && \
+    $APK add $DEPS && \
     git clone https://github.com/mongodb/mongo-tools.git . && \
-    mksh build.sh && \
+    . ./set_gopath.sh && \
+    for i in $TOOLS ; do go build -o "bin/$i" -tags "$tags" "$i/main/$i.go"; done && \
     mv bin/* /usr/local/bin/ && \
     rm -rf * && \
-    apk del git go mksh
+    apk del $DEPS
 
 WORKDIR /usr/local/bin
+VOLUME /usr/local/bin
