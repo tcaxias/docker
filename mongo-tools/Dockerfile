@@ -17,3 +17,5 @@ RUN \
     for i in $TOOLS ; do go build -o "/app/$i" -tags "$tags" "$i/main/$i.go"; done && \
     rm -rf /tmp/* /tmp/.??* && \
     apk del $DEPS
+
+CMD ash
