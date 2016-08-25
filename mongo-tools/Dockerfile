@@ -7,15 +7,13 @@ ENV \
     GOPATH="/tmp/go" \
     TOOLS="mongodump mongorestore"
 
+WORKDIR /app
+
 RUN \
     cd /tmp && \
     $APK add $DEPS && \
     git clone https://github.com/mongodb/mongo-tools.git . && \
     . ./set_gopath.sh && \
-    for i in $TOOLS ; do go build -o "bin/$i" -tags "$tags" "$i/main/$i.go"; done && \
-    mv bin/* /usr/local/bin/ && \
-    rm -rf * && \
+    for i in $TOOLS ; do go build -o "/app/$i" -tags "$tags" "$i/main/$i.go"; done && \
+    rm -rf /tmp/* /tmp/.??* && \
     apk del $DEPS
-
-WORKDIR /usr/local/bin
-VOLUME /usr/local/bin
