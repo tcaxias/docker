@@ -14,4 +14,4 @@ mongod --fork --syslog && \
     AUTH="--auth"
 fi
 
-exec mongod $AUTH --nojournal --httpinterface --rest
+exec mongod $AUTH --httpinterface --rest
