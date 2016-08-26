@@ -8,12 +8,12 @@ ENV \
     DEPS="git golang-1.6-go ca-certificates" \
     GO="/usr/lib/go-1.6/bin/go" \
     PASSWD="" \
-    ENGINE="wiredTiger"
+    ENGINE="wiredTiger" \
+    MONGO_OPTS="--httpinterface --rest --oplogSize 1024 --replSet x --nojournal"
 #  engine: [mmapv1, PerconaFT, rocksdb, wiredTiger]
 
 
 RUN \
-    $APT update && \
     apt-key adv --keyserver keys.gnupg.net --recv-keys 1C4CBDCDCD2EFD2A && \
     echo 'deb [arch=amd64] http://repo.percona.com/apt jessie main' \
         > /etc/apt/sources.list.d/percona.list && \

@@ -1,9 +1,14 @@
 #!/bin/sh
 
+mongod --storageEngine $ENGINE --fork --syslog && \
+    sleep 1 && \
+    until { echo 'rs.initiate()' | mongo local; } ; do sleep 1 ; done && \
+    mongod --shutdown
+
 AUTH=""
 if [ "_$PASSWD" != "_" ] ;
 then
-mongod --fork --syslog && \
+mongod --storageEngine $ENGINE --fork --syslog && \
     until { echo 'show dbs' | mongo; } ; do sleep 1 ; done && \
     echo "use admin ; db.createUser({" \
         "user:\"admin\",pwd:\"$PASSWD\"," \
@@ -14,4 +19,4 @@ mongod --fork --syslog && \
     AUTH="--auth"
 fi
 
-exec mongod --storageEngine $ENGINE $AUTH --httpinterface --rest
+exec mongod --storageEngine $ENGINE $AUTH $MONGO_OPTS

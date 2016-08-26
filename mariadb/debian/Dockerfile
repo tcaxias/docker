@@ -20,7 +20,6 @@ RUN touch /root/.my.cnf && \
         /root/.ssh
 
 RUN \
-    $APT update && \
     apt-key adv --recv-keys --keyserver keyserver.ubuntu.com 0xcbcb082a1bb943db && \
     echo 'deb [arch=amd64] http://lon1.mirrors.digitalocean.com/mariadb/repo/10.1/debian jessie main' \
         > /etc/apt/sources.list.d/mariadb.list && \
