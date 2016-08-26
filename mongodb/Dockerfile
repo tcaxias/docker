@@ -1,4 +1,4 @@
-# Container for MongoDB from Percona
+# Container for Percona's version of MongoDB
 FROM tcaxias/debian
 MAINTAINER Tiago Caxias http://github.com/tcaxias
 
