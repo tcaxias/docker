@@ -1,16 +1,10 @@
-FROM debian:jessie-backports
+FROM tcaxias/debian
 MAINTAINER Tiago Caxias http://github.com/tcaxias
 
-WORKDIR /app
-
 ENV \
-    TERM=xterm \
-    DEBIAN_FRONTEND=noninteractive \
-    APT="apt -yqq --no-install-recommends" \
     EXPORTER="github.com/dcu/mongodb_exporter" \
     PKGS="supervisor mongodb" \
     DEPS="git golang-1.6-go ca-certificates" \
-    GOPATH="/tmp/go" \
     PASSWD=""
 
 RUN \
