@@ -1,16 +1,28 @@
+# Container for MongoDB from Percona
 FROM tcaxias/debian
 MAINTAINER Tiago Caxias http://github.com/tcaxias
 
 ENV \
     EXPORTER="github.com/dcu/mongodb_exporter" \
-    PKGS="supervisor mongodb" \
+    PKGS="supervisor percona-server-mongodb-server percona-server-mongodb-shell" \
     DEPS="git golang-1.6-go ca-certificates" \
-    PASSWD=""
+    GO="/usr/lib/go-1.6/bin/go" \
+    PASSWD="" \
+    ENGINE="wiredTiger"
+#  engine: [mmapv1, PerconaFT, rocksdb, wiredTiger]
+
 
 RUN \
     $APT update && \
+    apt-key adv --recv-keys --keyserver keyserver.ubuntu.com 0xcbcb082a1bb943db && \
+    echo 'deb [arch=amd64] http://lon1.mirrors.digitalocean.com/mariadb/repo/10.1/debian jessie main' \
+        > /etc/apt/sources.list.d/mariadb.list && \
+    apt-key adv --keyserver keys.gnupg.net --recv-keys 1C4CBDCDCD2EFD2A && \
+    echo 'deb [arch=amd64] http://repo.percona.com/apt jessie main' \
+        > /etc/apt/sources.list.d/percona.list && \
+    $APT update && \
     $APT install $PKGS $DEPS && \
-    /usr/lib/go-1.6/bin/go get $EXPORTER && \
+    $GO get $EXPORTER && \
     mv $GOPATH/bin/* /app/ && \
     rm -rf $GOPATH && \
     $APT purge $DEPS && \
