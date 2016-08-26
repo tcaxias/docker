@@ -4,7 +4,7 @@ MAINTAINER Tiago Caxias http://github.com/tcaxias
 
 ENV \
     EXPORTER="github.com/dcu/mongodb_exporter" \
-    PKGS="supervisor percona-server-mongodb-server percona-server-mongodb-shell" \
+    PKGS="supervisor percona-server-mongodb" \
     DEPS="git golang-1.6-go ca-certificates" \
     GO="/usr/lib/go-1.6/bin/go" \
     PASSWD="" \
