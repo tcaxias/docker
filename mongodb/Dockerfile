@@ -1,25 +1,28 @@
-# Dockerfile for MongoDB on Alpine with prometheus' style /metrics endpoint
-FROM alpine:edge
+FROM debian:jessie-backports
 MAINTAINER Tiago Caxias http://github.com/tcaxias
+
 WORKDIR /app
 
 ENV \
+    TERM=xterm \
+    DEBIAN_FRONTEND=noninteractive \
+    APT="apt -yqq --no-install-recommends" \
     EXPORTER="github.com/dcu/mongodb_exporter" \
     PKGS="supervisor mongodb" \
-    DEPS="git go build-base" \
+    DEPS="git golang-1.6-go ca-certificates" \
     GOPATH="/tmp/go" \
     PASSWD=""
 
-RUN cat /etc/apk/repositories | \
-        sed -e 's|main|testing|g' \
-        >> /etc/apk/repositories
-
 RUN \
-    apk --no-cache --update add $PKGS $DEPS && \
-    go get $EXPORTER && \
+    $APT update && \
+    $APT install $PKGS $DEPS && \
+    /usr/lib/go-1.6/bin/go get $EXPORTER && \
     mv $GOPATH/bin/* /app/ && \
-    apk --no-cache del $DEPS && \
-    rm -rf $GOPATH
+    rm -rf $GOPATH && \
+    $APT purge $DEPS && \
+    apt-get -yqq autoremove && \
+    rm -rf /var/lib/apt/lists/* && \
+    find / -name "*.a" -exec rm -f {} \;
 
 ADD \
     supervisord.conf \
@@ -32,5 +35,3 @@ RUN chmod +x /app/*.sh
 VOLUME /data/db/
 EXPOSE 27017 28017 9104
 CMD [ "supervisord", "-c", "/app/supervisord.conf", "-j", "/dev/shm/supervisor.pid", "-l", "/dev/null" ]
-
-ENV TERM=xterm
