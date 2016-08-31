@@ -6,6 +6,7 @@ mongod --storageEngine $ENGINE $MONGO_OPTS --fork --syslog && \
     [ -d /app/include/ ] && for i in /app/include/*.sh ; do . $i ; done && \
     mongod --shutdown
 
+while pidof mongod; do sleep 1; done
 
 AUTH=""
 if [ "_$PASSWD" != "_" ] ;
@@ -20,5 +21,7 @@ mongod --storageEngine $ENGINE $MONGO_OPTS --fork --syslog && \
     mongod --shutdown && \
     AUTH="--auth"
 fi
+
+while pidof mongod; do sleep 1; done
 
 exec mongod --storageEngine $ENGINE $AUTH $MONGO_OPTS
