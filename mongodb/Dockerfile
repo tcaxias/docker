@@ -12,7 +12,6 @@ ENV \
     MONGO_OPTS="--httpinterface --rest --oplogSize 1024 --replSet x --nojournal"
 #  engine: [mmapv1, PerconaFT, rocksdb, wiredTiger]
 
-
 RUN \
     apt-key adv --keyserver keys.gnupg.net --recv-keys 1C4CBDCDCD2EFD2A && \
     echo 'deb [arch=amd64] http://repo.percona.com/apt jessie main' \

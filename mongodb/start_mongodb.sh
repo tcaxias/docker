@@ -5,6 +5,8 @@ mongod --storageEngine $ENGINE $MONGO_OPTS --fork --syslog && \
     until { echo 'rs.initiate()' | mongo local; } ; do sleep 1 ; done && \
     mongod --shutdown
 
+[ -d /app/include/ ] && for i in /app/include/*.sh ; do . $i ; done
+
 AUTH=""
 if [ "_$PASSWD" != "_" ] ;
 then
