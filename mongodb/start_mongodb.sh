@@ -3,6 +3,7 @@
 mongod --storageEngine $ENGINE $MONGO_OPTS --fork --syslog && \
     sleep 1 && \
     until { echo 'rs.initiate()' | mongo local; } ; do sleep 1 ; done && \
+    [ -d /app/include/ ] && for i in /app/include/*.sh ; do . $i ; done && \
     mongod --shutdown
 
 
@@ -16,7 +17,6 @@ mongod --storageEngine $ENGINE $MONGO_OPTS --fork --syslog && \
         "roles:[\"root\"]}) ;" \
     | tr ';' '\n' \
     | mongo && \
-    [ -d /app/include/ ] && for i in /app/include/*.sh ; do . $i ; done && \
     mongod --shutdown && \
     AUTH="--auth"
 fi
