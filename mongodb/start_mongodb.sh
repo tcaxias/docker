@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 mongod --storageEngine $ENGINE $MONGO_OPTS --fork --syslog && \
     sleep 1 && \
