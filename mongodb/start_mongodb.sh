@@ -1,5 +1,5 @@
 #!/bin/bash
-set -x
+
 AUTH=""
 SETPASS="show dbs"
 if [ "_$PASSWD" != "_" ] ;
