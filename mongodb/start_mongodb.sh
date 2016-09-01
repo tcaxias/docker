@@ -1,26 +1,26 @@
 #!/bin/bash
+set -x
+AUTH=""
+SETPASS="show dbs"
+if [ "_$PASSWD" != "_" ] ;
+then
+    SETPASS="use admin ; db.createUser({user:\"admin\",pwd:\"$PASSWD\",roles:[\"root\"]}) ;"
+fi
 
 mongod --storageEngine $ENGINE $MONGO_OPTS --fork --syslog && \
     sleep 1 && \
-    until { echo 'rs.initiate()' | mongo local; } ; do sleep 1 ; done && \
-    [ -d /app/include/ ] && for i in /app/include/*.sh ; do . $i ; done && \
+    until { echo 'rs.initiate({_id:"x",members:[{_id:0, host:"localhost"}]})' \
+                | mongo local; } ; do sleep 1 ; done && \
     mongod --shutdown
 
 while pidof mongod; do sleep 1; done
 
-AUTH=""
-if [ "_$PASSWD" != "_" ] ;
-then
 mongod --storageEngine $ENGINE $MONGO_OPTS --fork --syslog && \
     until { echo 'show dbs' | mongo; } ; do sleep 1 ; done && \
-    echo "use admin ; db.createUser({" \
-        "user:\"admin\",pwd:\"$PASSWD\"," \
-        "roles:[\"root\"]}) ;" \
-    | tr ';' '\n' \
-    | mongo && \
+    echo $SETPASS | tr ';' '\n' | mongo && \
+    [ -d /app/include/ ] && for i in /app/include/*.sh ; do . $i ; done && \
     mongod --shutdown && \
     AUTH="--auth"
-fi
 
 while pidof mongod; do sleep 1; done
 
