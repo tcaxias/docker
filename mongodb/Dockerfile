@@ -8,6 +8,7 @@ ENV \
     DEPS="git golang-1.6-go ca-certificates" \
     GO="/usr/lib/go-1.6/bin/go" \
     PASSWD="" \
+    MAINT_PORT="--port 21" \
     ENGINE="wiredTiger" \
     MONGO_OPTS="--httpinterface --rest --oplogSize 1024 --replSet x --nojournal"
 #  engine: [mmapv1, PerconaFT, rocksdb, wiredTiger]
