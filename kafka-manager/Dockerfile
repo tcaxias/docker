@@ -5,7 +5,7 @@ WORKDIR /app
 ENV \
     DEPS="wget" \
     PKGS="bash" \
-    ZK_HOSTS="my.zookeeper.host.com:2181" \
+    ZK_HOSTS="zk.zookeeper:2181" \
     APK="apk --update --no-cache" \
     VERSION="1.3.1.6"
 
