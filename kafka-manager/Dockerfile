@@ -16,6 +16,7 @@ RUN \
         tar -zx && \
     cd kafka-manager-${VERSION} && \
     ./sbt clean dist && \
+    rm -rf /root/.??* && \
     mv target/universal/kafka-manager-1.3.1.6.zip /app && \
     cd .. && \
     rm -rf kafka-manager-${VERSION} && \
