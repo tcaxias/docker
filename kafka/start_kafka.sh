@@ -4,8 +4,8 @@ if [ ! -f /app/config/server.custom.properties ] ; then
 
     sed -r /app/config/server.properties \
         -e "s|(broker.id=0)|broker.id.generation.enable = true|" \
-        -e "s|(zookeeper.connect=)localhost:2181|\1$ZK|" \
-        -e "s|#(listeners=PLAINTEXT://):9092|\1//0.0.0.0:9092|" \
+        -e "s|(zookeeper.connect=)localhost:2181|\1$ZK_HOSTS|" \
+        -e "s|#(listeners=PLAINTEXT:)//:9092|\1//0.0.0.0:9092|" \
         > /app/config/server.custom.properties
 fi
 

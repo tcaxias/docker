@@ -10,7 +10,8 @@ ENV \
     DEPS="wget" \
     SCALA_VERSION="2.11" \
     KAFKA_VERSION="0.10.0.1" \
-    KAFKA_MIRROR="http://mirrors.fe.up.pt/pub/apache"
+    KAFKA_MIRROR="http://mirrors.fe.up.pt/pub/apache" \
+    ZK_HOSTS="127.0.0.1:2181"
 
 RUN $APK add $PKGS
 
