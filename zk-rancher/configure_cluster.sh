@@ -4,6 +4,7 @@
 # and https://github.com/lukeolbrish/examples/tree/master/zookeeper/five-server-docker
 # Please respect the licenses on those repos
 
+sleep 10
 until grep -q '169.254.169.250' /etc/resolv.conf; do sleep 1; done
 
 METADATA="http://169.254.169.250/latest"
