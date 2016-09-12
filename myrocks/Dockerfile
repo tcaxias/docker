@@ -4,7 +4,7 @@ ENV \
     DEPS="build-essential git libbz2-dev libaio-dev bison zlib1g-dev \
     libsnappy-dev libgflags-dev libreadline6-dev libncurses5-dev libssl-dev \
     liblz4-dev gdb cmake golang-1.6-go ca-certificates" \
-    PKGS="supervisor" \
+    PKGS="supervisor libbz2 liblz4 zlib1g libreadine libncurses5 libssl libsnappy" \
     GO="/usr/lib/go-1.6/bin/go" \
     WITH_SNAPPY="/usr" \
     WITH_BZ2="/usr" \
