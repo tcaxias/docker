@@ -12,8 +12,10 @@ ENV \
     KAFKA_VERSION="0.10.0.1" \
     KAFKA_MIRROR="http://mirrors.fe.up.pt/pub/apache"
 
+RUN $APK add $PKGS
+
 RUN \
-    $APK add $PKGS $DEPS && \
+    $APK add $DEPS && \
     wget -q -O- \
         $KAFKA_MIRROR/kafka/$KAFKA_VERSION/kafka_${SCALA_VERSION}-${KAFKA_VERSION}.tgz | \
         tar -zxC . && \

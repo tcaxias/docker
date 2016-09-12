@@ -1,7 +1,5 @@
 #!/bin/bash
 
-[ -f include.sh ] && . include.sh
-
 if [ ! -f /app/config/server.custom.properties ] ; then
 
     sed -r /app/config/server.properties \
