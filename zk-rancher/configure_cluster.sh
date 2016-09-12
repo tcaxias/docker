@@ -17,7 +17,7 @@ echo $MYID | tee /var/zookeeper/myid > /tmp/zookeeper/myid
 curl --header 'Accept: application/json' \
     "$METADATA/self/service/containers" | \
     jq  -r '.[] | [ .service_index , .ports[0] ]' -c | \
-    sed -r -e 's#\["([^"]+)","([^:]+).*#zk.\1=\2:2888:3888#g' >> \
+    sed -r -e 's#\["([^"]+)","([^:]+).*#server.\1=\2:2888:3888#g' >> \
     /opt/zookeeper/conf/zoo.cfg
 
 exec /opt/zookeeper/bin/zkServer.sh start-foreground
