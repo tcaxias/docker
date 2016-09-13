@@ -17,7 +17,8 @@ if [ ! -f /app/config/server.custom.properties ] ; then
         -e "s|(zookeeper.connect=)localhost:2181|\1$ZK_HOSTS|" \
         -e "s|#(listeners=PLAINTEXT:)//:9092|\1//0.0.0.0:9092|" \
         -e "s|#(advertised.listeners=PLAINTEXT:)//your.host.name:9092|\1//$IP:9092|" \
-        > /app/config/server.custom.properties
+        | grep -v \# > /app/config/server.custom.properties
+    echo 'delete.topic.enable=true' >> /app/config/server.custom.properties
 fi
 
 exec /app/bin/kafka-server-start.sh /app/config/server.custom.properties
