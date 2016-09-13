@@ -1,6 +1,6 @@
 #!/bin/bash
 
-if $RANCHER; then
+if [ $RANCHER ]; then
     until grep -q '169.254.169.250' /etc/resolv.conf; do
         sleep 1
     done
