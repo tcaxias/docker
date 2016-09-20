@@ -1,1 +1,5 @@
-# Container for Kafka with vanilla conf and automatic id generation
+# Container for Kafka
+## Features:
+* vanilla conf
+* automatic id generation
+* airbnb's kafkat
