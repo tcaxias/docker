@@ -21,4 +21,7 @@ if [ ! -f /app/config/server.custom.properties ] ; then
     echo 'delete.topic.enable=true' >> /app/config/server.custom.properties
 fi
 
+echo '{ "kafka_path": "/app", "log_path": "/tmp/kafka-logs", "zk_path": "'$ZK_HOSTS'" }' \
+    > /etc/kafkatcfg
+
 exec /app/bin/kafka-server-start.sh /app/config/server.custom.properties
