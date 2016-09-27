@@ -1,0 +1,26 @@
+# Container for Riak CS Control
+FROM centos:7
+MAINTAINER Tiago Caxias http://github.com/tcaxias
+
+ENV \
+    PKGS="pygpgme openssl sudo" \
+    RIAK_IP="127.0.0.1" \
+    RIAK_PORT="8098" \
+    S3_HOST="s3.amazonaws.com" \
+    RIAK_S2_PORT="8080" \
+    RIAK_S2_PROTOCOL="http" \
+    RIAK_S2_PROXY_HOST="127.0.0.1" \
+    RIAK_S2_PROXY_PORT="8080" \
+    PASSWD="big_bad_secret" \
+    CS_CONTROL="http://s3.amazonaws.com/downloads.basho.com/riak-cs-control/1.0/1.0.2/rhel/6/riak-cs-control-1.0.2-1.el6.x86_64.rpm"
+
+RUN \
+    yum install -y $CS_CONTROL $PKGS && \
+    yum clean -y all
+
+ADD start_riak_cs_control.sh /app/
+
+RUN chmod +x /app/*.sh
+
+EXPOSE 8000
+CMD /app/start_riak_cs_control.sh

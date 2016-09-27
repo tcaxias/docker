@@ -11,7 +11,7 @@ until grep -q '169.254.169.250' /etc/resolv.conf; do
 done
 
 METADATA="http://169.254.169.250/latest"
-MYID=$(curl --header 'Accept: application/json' "$METADATA/self/container/service_index"|jq -r .)
+MYID=$(curl --header 'Accept: application/json' "$METADATA/self/container/service_index")
 
 mkdir -p /{var,tmp}/zookeeper
 echo $MYID | tee /var/zookeeper/myid > /tmp/zookeeper/myid
