@@ -8,7 +8,7 @@ ENV \
     REPO="/etc/yum.repos.d/basho.repo" \
     OS="el" \
     DIST="7" \
-    RING_SIZE="64" \
+    RING_SIZE="" \
     PASSWD="" \
     CERT_DIR="" \
     RIAK_KV_DIR="https://packagecloud.io/install/repositories/basho/riak" \

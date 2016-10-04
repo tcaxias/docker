@@ -12,7 +12,6 @@ fi
 
 sed -i /etc/riak/riak.conf \
     -e "s#riak_control = off#riak_control = on#" \
-    -e "s#ring_size = 64#ring_size = $RING_SIZE#" \
     -e "s#listener = 127.0.0.1:8087#listener = 0.0.0.0:8087#" \
     -e "s#nodename = riak@127.0.0.1#nodename = riak@$IP#" \
     -e "s#storage_backend = bitcask##" \
@@ -25,14 +24,17 @@ done
 grep -q 'buckets.default.allow_mult' /etc/riak/riak.conf || \
     echo "buckets.default.allow_mult = true" >> /etc/riak/riak.conf
 
-if [ "_$PASSWD" != "_"]; then
+[ "_$RING_SIZE" = "_" ] || \
+    echo "ring_size = $RING_SIZE" >> /etc/riak/riak.conf
+
+if [ "_$PASSWD" != "_" ]; then
     sed -i /etc/riak/riak.conf \
         -e "s#riak_control.auth.mode = off#riak_control.auth.mode = userlist#"
 
     grep -q 'riak_control.auth.user.admin.password' /etc/riak/riak.conf || \
         echo "riak_control.auth.user.admin.password = $PASSWD" >> /etc/riak/riak.conf
 
-    [ "_$CERT_DIR" = "_"] && CERT_DIR='$(platform_etc_dir)'
+    [ "_$CERT_DIR" = "_" ] && CERT_DIR='$(platform_etc_dir)'
     echo "ssl.certfile = $CERT_DIR/cert.pem" >> /etc/riak/riak.conf
     echo "ssl.keyfile = $CERT_DIR/key.pem" >> /etc/riak/riak.conf
     echo "ssl.cacertfile = $CERT_DIR/cacertfile.pem" >> /etc/riak/riak.conf
