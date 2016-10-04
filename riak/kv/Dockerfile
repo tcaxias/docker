@@ -2,6 +2,12 @@
 FROM centos:7
 MAINTAINER Tiago Caxias http://github.com/tcaxias
 
+# Pick a RING_SIZE:
+# http://docs.basho.com/riak/kv/2.1.4/setup/planning/cluster-capacity/#ring-size-number-of-partitions
+
+# Configure AUTH access with CERT_DIR and PASSWD
+# http://docs.basho.com/riak/kv/2.1.4/using/admin/riak-control/#enabling-ssl-and-https
+
 ENV \
     PKGS="pygpgme riak riak-cs python" \
     DEPS="python-pip" \
