@@ -8,6 +8,9 @@ ENV \
     REPO="/etc/yum.repos.d/basho.repo" \
     OS="el" \
     DIST="7" \
+    RING_SIZE="64" \
+    PASSWD="" \
+    CERT_DIR="" \
     RIAK_KV_DIR="https://packagecloud.io/install/repositories/basho/riak" \
     RIAK_CS_DIR="https://packagecloud.io/install/repositories/basho/riak-cs" \
     UNZIP="python -c \"import zipfile,sys,StringIO;zipfile.ZipFile(StringIO.StringIO(sys.stdin.read())).extractall(sys.argv[1] if len(sys.argv) == 2 else '.')\"" \
