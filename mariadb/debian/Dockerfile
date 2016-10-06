@@ -8,7 +8,8 @@ ENV \
     DEPS="git golang-1.6-go apt-transport-https wget" \
     GO="/usr/lib/go-1.6/bin/go" \
     SSH="ssh -oStrictHostKeyChecking=no" \
-    CHECK_TZ=0
+    CHECK_TZ=0 \
+    METRICS_PORT="9104"
 
 ADD my.cnf /root/.my.cnf
 

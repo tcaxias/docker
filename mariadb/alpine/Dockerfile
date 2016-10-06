@@ -10,7 +10,8 @@ ENV \
     GIT_SSL_NO_VERIFY=true \
     GOPATH="/tmp/go" \
     SSH="ssh -oStrictHostKeyChecking=no" \
-    CHECK_TZ=0
+    CHECK_TZ=0 \
+    METRICS_PORT=":9104"
 
 ADD my.cnf /root/.my.cnf
 
