@@ -1,0 +1,59 @@
+# Container for MariaDB 10.1
+FROM tcaxias/debian
+MAINTAINER Tiago Caxias http://github.com/tcaxias
+
+ENV \
+    PKGS="percona-xtrabackup-24 mariadb-server-10.1 supervisor socat tzdata xinetd" \
+    GIT_SSL_NO_VERIFY=true \
+    DEPS="git golang-1.6-go apt-transport-https wget" \
+    GO="/usr/lib/go-1.6/bin/go" \
+    SSH="ssh -oStrictHostKeyChecking=no" \
+    CHECK_TZ=0 \
+    METRICS_PORT="9104"
+
+ADD my.cnf /root/.my.cnf
+
+RUN touch /root/.my.cnf && \
+    mkdir -p \
+        /etc/mysql/conf.d \
+        /run/mysqld \
+        /var/run/mysqld/tmp \
+        /root/.ssh
+
+RUN \
+    apt-key adv --recv-keys --keyserver keyserver.ubuntu.com 0xcbcb082a1bb943db && \
+    echo 'deb [arch=amd64] http://lon1.mirrors.digitalocean.com/mariadb/repo/10.1/debian jessie main' \
+        > /etc/apt/sources.list.d/mariadb.list && \
+    apt-key adv --keyserver keys.gnupg.net --recv-keys 1C4CBDCDCD2EFD2A && \
+    echo 'deb [arch=amd64] http://repo.percona.com/apt jessie main' \
+        > /etc/apt/sources.list.d/percona.list && \
+    $APT update && \
+    $APT upgrade && \
+    $APT install $PKGS $DEPS && \
+    $GO get github.com/prometheus/mysqld_exporter && \
+    mv $GOPATH/bin/mysqld_exporter . && \
+    rm -rf $GOPATH && \
+    git clone https://github.com/github/mysql-haproxy-xinetd && \
+    mv mysql-haproxy-xinetd/scripts . && \
+    mv mysql-haproxy-xinetd/xinetd/xinetd.conf /etc && \
+    mv mysql-haproxy-xinetd/xinetd/mysql* /etc/xinetd.d && \
+    rm -rf mysql-haproxy-xinetd && \
+    $APT purge $DEPS && \
+    apt-get -yqq autoremove && \
+    rm -rf /var/lib/apt/lists/* && \
+    rm -rf /var/lib/mysql/* && \
+    find / -name "*.a" -exec rm -f {} \;
+
+# I want to add the mysql-haproxy-xinetd to /etc/services
+# I want to add the full path to the scripts
+
+ADD \
+    https://raw.githubusercontent.com/tcaxias/utils/master/get_mysql_port/get_mysql_port.sh \
+    https://raw.githubusercontent.com/tcaxias/utils/master/mysql_monitor/mysql_monitor.sh \
+    https://raw.githubusercontent.com/tcaxias/utils/master/mysql_supervisord/supervisord.conf \
+    https://raw.githubusercontent.com/tcaxias/utils/master/start_mysql/start_mysql.sh \
+    /app/
+
+RUN chmod +x *.sh
+VOLUME [ "/var/lib/mysql", "/var/log/mysql", "/etc/mysql/conf.d", "/var/run/mysqld" ]
+CMD [ "supervisord", "-c", "/app/supervisord.conf", "-j", "/dev/shm/supervisor.pid", "-l", "/dev/null" ]
