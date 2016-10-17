@@ -6,7 +6,7 @@ WORKDIR /app
 ENV \
     TERM=xterm \
     DEBIAN_FRONTEND=noninteractive \
-    APT="apt -yqq --no-install-recommends" \
+    APT="apt -yqq --no-install-recommends -t jessie-backports" \
     GOPATH="/tmp/go"
 
 CMD bash
