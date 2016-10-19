@@ -1,6 +1,6 @@
 #!/bin/sh
 
 echo '{"license_key": "'$NR_KEY'"}' > \
-    /app/newrelic_mysql_plugin-${VERSION}/config/newrelic.json
+    /app/config/newrelic.json
 
-exec java -Xmx${JVM_HEAP} -jar /app/newrelic_mysql_plugin-${VERSION}/plugin.jar
+exec java -Xmx${JVM_HEAP} -jar /app/plugin.jar

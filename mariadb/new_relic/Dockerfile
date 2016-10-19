@@ -14,7 +14,9 @@ RUN \
     wget --quiet -O- \
         https://github.com/newrelic-platform/newrelic_mysql_java_plugin/blob/master/dist/newrelic_mysql_plugin-${VERSION}.tar.gz?raw=true | \
         tar -zx && \
-    apk del $DEPS
+    apk del $DEPS && \
+    mv newrelic_mysql_plugin-${VERSION}/config newrelic_mysql_plugin-${VERSION}/plugin.jar . && \
+    rm -rf newrelic_mysql_plugin-${VERSION}
 
 ADD start.sh /app
 
