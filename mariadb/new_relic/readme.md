@@ -29,4 +29,5 @@
     }
     EOF
 
-    docker run --name newrelic_mysql_plugin -e NR_KEY=MY_AWESOME_NR_KEY -v /etc/newrelic_mysql_plugin/plugin.json:/app/config/plugin.json:ro tcaxias/newrelic_mysql_plugin
+    docker run -d --restart=always --name newrelic_mysql_plugin -e NR_KEY=MY_AWESOME_NR_KEY \
+    -v /etc/newrelic_mysql_plugin/plugin.json:/app/config/plugin.json:ro tcaxias/newrelic_mysql_plugin
