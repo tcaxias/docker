@@ -20,4 +20,4 @@ RUN \
 
 ADD start.sh /app
 
-CMD "/bin/sh /app/start.sh"
+CMD ["/bin/sh","/app/start.sh"]
