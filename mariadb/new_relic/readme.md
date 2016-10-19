@@ -10,16 +10,14 @@
           "metrics" : "status,newrelic,master,slave,buffer_pool_stats,innodb_status,innodb_metrics,innodb_mutex",
           "user" : "MY_MONITOR_MYSQL_USER",
           "passwd" : "MY_AWESOME_MYSQL_PASSWORD"
-        }
-    ,
+        },
         {
           "name" : "My 2nd MySQL Database",
           "host" : "192.168.2.22:22222",
           "metrics" : "status,newrelic,master,slave,buffer_pool_stats,innodb_status,innodb_metrics,innodb_mutex",
           "user" : "MY_MONITOR_MYSQL_USER",
           "passwd" : "MY_AWESOME_MYSQL_PASSWORD"
-        }
-    ,
+        },
         {
           "name" : "My 3rd MySQL Database",
           "host" : "192.168.3.33:33333",
