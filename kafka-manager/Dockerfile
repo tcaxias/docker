@@ -7,7 +7,7 @@ ENV \
     PKGS="bash" \
     ZK_HOSTS="zk.zookeeper:2181" \
     APK="apk --update --no-cache" \
-    VERSION="1.3.1.6"
+    VERSION="1.3.1.8"
 
 RUN \
     $APK add $DEPS $PKGS && \
@@ -17,7 +17,7 @@ RUN \
     cd kafka-manager-${VERSION} && \
     ./sbt clean dist && \
     rm -rf /root/.??* && \
-    mv target/universal/kafka-manager-1.3.1.6.zip /app && \
+    mv target/universal/kafka-manager-${VERSION}.zip /app && \
     cd .. && \
     rm -rf kafka-manager-${VERSION} && \
     unzip kafka-manager-${VERSION}.zip && \
