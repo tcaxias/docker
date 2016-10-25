@@ -24,7 +24,7 @@ RUN \
     apt-key adv --recv-keys --keyserver keyserver.ubuntu.com 0xcbcb082a1bb943db && \
     echo 'deb [arch=amd64] http://lon1.mirrors.digitalocean.com/mariadb/repo/10.1/debian jessie main' \
         > /etc/apt/sources.list.d/mariadb.list && \
-    apt-key adv --keyserver keys.gnupg.net --recv-keys 1C4CBDCDCD2EFD2A && \
+    apt-key adv --keyserver keys.gnupg.net --recv-keys 9334A25F8507EFA5 && \
     echo 'deb [arch=amd64] http://repo.percona.com/apt jessie main' \
         > /etc/apt/sources.list.d/percona.list && \
     $APT update && \

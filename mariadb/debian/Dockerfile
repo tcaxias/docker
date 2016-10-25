@@ -5,7 +5,7 @@ MAINTAINER Tiago Caxias http://github.com/tcaxias
 ENV \
     PKGS="percona-xtrabackup-24 mariadb-server-10.1 supervisor socat dropbear tzdata" \
     GIT_SSL_NO_VERIFY=true \
-    DEPS="git golang-1.6-go apt-transport-https wget" \
+    DEPS="git golang-1.6-go wget" \
     GO="/usr/lib/go-1.6/bin/go" \
     SSH="ssh -oStrictHostKeyChecking=no" \
     CHECK_TZ=0 \
@@ -24,7 +24,7 @@ RUN \
     apt-key adv --recv-keys --keyserver keyserver.ubuntu.com 0xcbcb082a1bb943db && \
     echo 'deb [arch=amd64] http://lon1.mirrors.digitalocean.com/mariadb/repo/10.1/debian jessie main' \
         > /etc/apt/sources.list.d/mariadb.list && \
-    apt-key adv --keyserver keys.gnupg.net --recv-keys 1C4CBDCDCD2EFD2A && \
+    apt-key adv --keyserver keys.gnupg.net --recv-keys 9334A25F8507EFA5 && \
     echo 'deb [arch=amd64] http://repo.percona.com/apt jessie main' \
         > /etc/apt/sources.list.d/percona.list && \
     $APT update && \
@@ -46,6 +46,8 @@ ADD \
     https://raw.githubusercontent.com/tcaxias/utils/master/mysql_supervisord/supervisord.conf \
     https://raw.githubusercontent.com/tcaxias/utils/master/start_mysql/start_mysql.sh \
     /app/
+
+RUN mv /app/supervisord.conf /etc/
 
 RUN chmod +x *.sh
 VOLUME [ "/var/lib/mysql", "/var/log/mysql", "/etc/mysql/conf.d", "/var/run/mysqld" ]
