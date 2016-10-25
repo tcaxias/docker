@@ -51,4 +51,4 @@ RUN mv /app/supervisord.conf /etc/
 
 RUN chmod +x *.sh
 VOLUME [ "/var/lib/mysql", "/var/log/mysql", "/etc/mysql/conf.d", "/var/run/mysqld" ]
-CMD [ "supervisord", "-c", "/app/supervisord.conf", "-j", "/dev/shm/supervisor.pid", "-l", "/dev/null" ]
+CMD [ "supervisord", "-j", "/dev/shm/supervisor.pid", "-l", "/dev/null" ]
