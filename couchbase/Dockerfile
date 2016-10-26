@@ -31,5 +31,5 @@ WORKDIR /app
 ADD start.sh /app/
 RUN chmod +x /app/start.sh
 
-EXPOSE 9104
+EXPOSE 9131
 ENTRYPOINT "/app/start.sh"
