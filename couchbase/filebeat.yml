@@ -1,0 +1,15 @@
+filebeat.prospectors:
+- input_type: log
+  paths:
+    - /opt/couchbase/var/lib/couchbase/logs/*.log
+  encoding: utf-8
+
+output.console:
+  enabled: true
+
+output.kafka:
+  enabled: ${KAFKA_LOGS:false}
+  version: 0.10
+  hosts: ${KAFKA_BROKER_LIST:[]"127.0.0.1:9092","127.0.1.1:9092"]}
+  topic: "yellow"
+  partition: "random"
