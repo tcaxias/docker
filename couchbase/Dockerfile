@@ -26,6 +26,9 @@ RUN \
     apt-get purge $DEPS -y && \
     apt-get autoremove -y
 
+# filebeat doesn't get killed by supervisor properly - this is a simple fix
+RUN sed -i -r -e 's#^/usr#exec /usr#' /usr/bin/filebeat.sh
+
 ADD supervisord.conf filebeat.yml /etc/
 WORKDIR /app
 ADD start.sh /app/
