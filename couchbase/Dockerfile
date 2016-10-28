@@ -32,8 +32,7 @@ RUN sed -i -r -e 's#^/usr#exec /usr#' /usr/bin/filebeat.sh
 ADD supervisord.conf filebeat.yml /etc/
 WORKDIR /app
 ADD start.sh /app/
-RUN chmod +x /app/start.sh
 
 ENV TERM='xterm'
 EXPOSE 9131
-ENTRYPOINT "/app/start.sh"
+ENTRYPOINT ["/bin/sh","/app/start.sh"]
