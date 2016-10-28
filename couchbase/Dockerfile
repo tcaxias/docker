@@ -8,7 +8,7 @@ ENV \
     PIP_PKGS="supervisor" \
     FILEBEAT="5.0.0-rc1" \
     KAFKA_LOGS="false" \
-    KAFKA_BROKER_LIST='["127.0.0.1:9092"]'
+    KAFKA_BROKER_LIST='"127.0.0.1:9092"'
 
 RUN \
     apt-get update && \
@@ -34,5 +34,6 @@ WORKDIR /app
 ADD start.sh /app/
 RUN chmod +x /app/start.sh
 
+ENV TERM='xterm'
 EXPOSE 9131
 ENTRYPOINT "/app/start.sh"
