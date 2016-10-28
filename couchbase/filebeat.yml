@@ -5,7 +5,7 @@ filebeat.prospectors:
   encoding: utf-8
 
 output.console:
-  enabled: true
+  enabled: ${CONSOLE_LOGS:true}
 
 output.kafka:
   enabled: ${KAFKA_LOGS:false}

@@ -4,7 +4,6 @@ ENV \
     PKGS="python-setuptools" \
     GOPATH="/tmp/go" \
     DEPS="ca-certificates" \
-    GO="/usr/lib/go-1.6/bin/go" \
     PIP_PKGS="supervisor" \
     FILEBEAT="5.0.0-rc1" \
     KAFKA_LOGS="false" \
