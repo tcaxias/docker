@@ -14,7 +14,6 @@ filebeat.prospectors:
     - /opt/couchbase/var/lib/couchbase/logs/views.log
     - /opt/couchbase/var/lib/couchbase/logs/xdcr_errors.log
     - /opt/couchbase/var/lib/couchbase/logs/xdcr_trace.log
-  tail_files: true
   encoding: utf-8
   document_type: couchbase
   multiline:
@@ -32,7 +31,6 @@ filebeat.prospectors:
     - /opt/couchbase/var/lib/couchbase/logs/indexer.log
     - /opt/couchbase/var/lib/couchbase/logs/projector.log
     - /opt/couchbase/var/lib/couchbase/logs/query.log
-  tail_files: true
   encoding: utf-8
   document_type: couchbase
   fields:
