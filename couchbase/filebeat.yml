@@ -1,8 +1,45 @@
 filebeat.prospectors:
 - input_type: log
   paths:
-    - /opt/couchbase/var/lib/couchbase/logs/*.log
+    - /opt/couchbase/var/lib/couchbase/logs/babysitter.log
+    - /opt/couchbase/var/lib/couchbase/logs/couchdb.log
+    - /opt/couchbase/var/lib/couchbase/logs/debug.log
+    - /opt/couchbase/var/lib/couchbase/logs/error.log
+    - /opt/couchbase/var/lib/couchbase/logs/info.log
+    - /opt/couchbase/var/lib/couchbase/logs/mapreduce_errors.log
+    - /opt/couchbase/var/lib/couchbase/logs/metakv.log
+    - /opt/couchbase/var/lib/couchbase/logs/ns_couchdb.log
+    - /opt/couchbase/var/lib/couchbase/logs/reports.log
+    - /opt/couchbase/var/lib/couchbase/logs/stats.log
+    - /opt/couchbase/var/lib/couchbase/logs/xdcr.log
+    - /opt/couchbase/var/lib/couchbase/logs/views.log
+    - /opt/couchbase/var/lib/couchbase/logs/xdcr_errors.log
+    - /opt/couchbase/var/lib/couchbase/logs/xdcr_trace.log
+  tail_files: true
   encoding: utf-8
+  document_type: couchbase
+  fields:
+    env:       ${ENV:testing}
+    host:      ${HOST:localhost}
+    multiline:
+      pattern: '^\[[a-z]+:[a-z]+,'
+      negate: true
+      match: after
+
+- input_type: log
+  paths:
+    - /opt/couchbase/var/lib/couchbase/logs/goxdcr.log
+    - /opt/couchbase/var/lib/couchbase/logs/http_access.log
+    - /opt/couchbase/var/lib/couchbase/logs/http_access_internal.log
+    - /opt/couchbase/var/lib/couchbase/logs/indexer.log
+    - /opt/couchbase/var/lib/couchbase/logs/projector.log
+    - /opt/couchbase/var/lib/couchbase/logs/query.log
+  tail_files: true
+  encoding: utf-8
+  document_type: couchbase
+  fields:
+    env:       ${ENV:testing}
+    host:      ${HOST:localhost}
 
 output.console:
   enabled: ${CONSOLE_LOGS:true}

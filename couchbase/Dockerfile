@@ -15,7 +15,7 @@ RUN \
     easy_install pip && \
     pip install -U pip && \
     pip install supervisor && \
-    wget https://artifacts.elastic.co/downloads/beats/filebeat/filebeat-${FILEBEAT}-amd64.deb && \
+    wget -q https://artifacts.elastic.co/downloads/beats/filebeat/filebeat-${FILEBEAT}-amd64.deb && \
     dpkg -i filebeat-${FILEBEAT}-amd64.deb && \
     rm -f filebeat-${FILEBEAT}-amd64.deb && \
     apt-get install -f -yqq && \
