@@ -1,6 +1,5 @@
 filebeat.prospectors:
-- input_type: log
-  paths:
+- paths:
     - /opt/couchbase/var/lib/couchbase/logs/babysitter.log
     - /opt/couchbase/var/lib/couchbase/logs/couchdb.log
     - /opt/couchbase/var/lib/couchbase/logs/debug.log
@@ -18,16 +17,15 @@ filebeat.prospectors:
   tail_files: true
   encoding: utf-8
   document_type: couchbase
+  multiline:
+    pattern: '^\[[a-z]+:[a-z]+,'
+    negate: true
+    match: after
   fields:
     env:       ${ENV:testing}
     host:      ${HOST:localhost}
-    multiline:
-      pattern: '^\[[a-z]+:[a-z]+,'
-      negate: true
-      match: after
 
-- input_type: log
-  paths:
+- paths:
     - /opt/couchbase/var/lib/couchbase/logs/goxdcr.log
     - /opt/couchbase/var/lib/couchbase/logs/http_access.log
     - /opt/couchbase/var/lib/couchbase/logs/http_access_internal.log
