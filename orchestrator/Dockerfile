@@ -26,10 +26,11 @@ RUN \
 
 WORKDIR "/usr/local/orchestrator"
 
+ADD orchestrator.conf.json /etc/orchestrator.conf.json
 ADD start.sh /
 RUN chmod +x /start.sh
+CMD [ "/start.sh" ]
 
 EXPOSE 3000 9108
-CMD [ "/start.sh" ]
 
 ENV TERM=xterm
