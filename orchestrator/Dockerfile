@@ -10,10 +10,11 @@ ENV \
 RUN \
     $APT update && \
     $APT install wget && \
-    wget \
+    wget -q \
         https://github.com/outbrain/orchestrator/releases/download/v${ORCHESTRATOR_VERSION}/orchestrator-cli_${ORCHESTRATOR_VERSION}_amd64.deb \
         https://github.com/outbrain/orchestrator/releases/download/v${ORCHESTRATOR_VERSION}/orchestrator_${ORCHESTRATOR_VERSION}_amd64.deb && \
     for i in /*.deb; do dpkg -i $i ; done && \
+    $APT install -f && \
     rm -f *.deb && \
     $APT purge wget && \
     apt-get -yqq autoremove
