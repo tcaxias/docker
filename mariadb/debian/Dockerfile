@@ -5,10 +5,11 @@ MAINTAINER Tiago Caxias http://github.com/tcaxias
 ENV \
     PKGS="percona-xtrabackup-24 mariadb-server-10.1 supervisor socat dropbear tzdata" \
     GIT_SSL_NO_VERIFY=true \
-    DEPS="git golang-1.6-go wget" \
+    DEPS="git golang-1.6-go wget ca-certificates" \
     GO="/usr/lib/go-1.6/bin/go" \
     SSH="ssh -oStrictHostKeyChecking=no" \
     CHECK_TZ=0 \
+    FILEBEAT="5.0.0-rc1" \
     METRICS_PORT="9104"
 
 ADD my.cnf /root/.my.cnf
@@ -30,6 +31,10 @@ RUN \
     $APT update && \
     $APT upgrade && \
     $APT install $PKGS $DEPS && \
+    wget -q https://artifacts.elastic.co/downloads/beats/filebeat/filebeat-${FILEBEAT}-amd64.deb && \
+    dpkg -i filebeat-${FILEBEAT}-amd64.deb && \
+    rm -f filebeat-${FILEBEAT}-amd64.deb && \
+    apt-get install -f -yqq && \
     $GO get github.com/prometheus/mysqld_exporter && \
     mv $GOPATH/bin/mysqld_exporter . && \
     rm -rf $GOPATH && \
@@ -46,6 +51,10 @@ ADD \
     https://raw.githubusercontent.com/tcaxias/utils/master/mysql_supervisord/supervisord.conf \
     https://raw.githubusercontent.com/tcaxias/utils/master/start_mysql/start_mysql.sh \
     /app/
+
+# filebeat doesn't get killed by supervisor properly - this is a simple fix
+RUN sed -i -r -e 's#^/usr#exec /usr#' /usr/bin/filebeat.sh
+ADD filebeat.yml /etc/
 
 RUN chmod +x *.sh
 VOLUME [ "/var/lib/mysql", "/var/log/mysql", "/etc/mysql/conf.d", "/var/run/mysqld" ]

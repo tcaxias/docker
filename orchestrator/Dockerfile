@@ -3,9 +3,9 @@ MAINTAINER Tiago Caxias http://github.com/tcaxias
 
 ENV \
     DEBIAN_FRONTEND=noninteractive \
-    DEPS="wget" \
+    DEPS="wget ca-certificates" \
     APT="apt -yqq" \
-    ORCHESTRATOR_VERSION="1.4.590"
+    ORCHESTRATOR_VERSION="1.5.7"
 
 RUN \
     $APT update && \
