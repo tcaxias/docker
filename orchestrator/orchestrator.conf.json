@@ -1,5 +1,5 @@
 {
-  "Debug": true,
+  "Debug": false,
   "EnableSyslog": false,
   "ListenAddress": ":3000",
   "MySQLTopologyUser": "orc_client",
@@ -13,7 +13,7 @@
   "MySQLTopologyMaxPoolConnections": 3,
   "DatabaselessMode__experimental": false,
   "MySQLOrchestratorHost": "127.0.0.1",
-  "MySQLOrchestratorPort": 12345,
+  "MySQLOrchestratorPort": 3306,
   "MySQLOrchestratorDatabase": "orchestrator",
   "MySQLOrchestratorUser": "orc_server",
   "MySQLOrchestratorPassword": "SERVER_PASSWORD",
@@ -137,8 +137,7 @@
   "MasterFailoverLostInstancesDowntimeMinutes": 0,
   "PostponeSlaveRecoveryOnLagMinutes": 0,
   "OSCIgnoreHostnameFilters": [],
-  "GraphiteAddr": "",
-  "GraphitePath": "",
+  "GraphiteAddr": "127.0.0.1:9109",
+  "GraphitePath": "orchestrator",
   "GraphiteConvertHostnameDotsToUnderscores": true
 }
-
