@@ -11,8 +11,9 @@ For a container environment (mesos, k8s, swarm, ...) make use of the /api/status
 There is a prometheus /metrics endpoint on port 9108.
 It's using Orchestrator's native graphite metrics exporter and [graphite_exporter](https://github.com/prometheus/graphite_exporter) to translate it to a /metrics endpoint.
 
-You may run this using:
+Examples on how to run this:
 
     docker run -d --net host tcaxias/orchestrator
-or
-    docker run -d -v $PWD/orchestrator.conf.json:/etc/orchestrator.conf.json:ro -p 3000:3000 -p 9108:9108 tcaxias/orchestrator
+    
+    docker run -v $PWD/orchestrator.conf.json:/etc/orchestrator.conf.json:ro \
+        -p 3000:3000 -p 9108:9108 tcaxias/orchestrator
