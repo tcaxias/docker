@@ -15,5 +15,4 @@ You may run this using:
 
     docker run -d --net host tcaxias/orchestrator
 or
-
     docker run -d -v $PWD/orchestrator.conf.json:/etc/orchestrator.conf.json:ro -p 3000:3000 -p 9108:9108 tcaxias/orchestrator
