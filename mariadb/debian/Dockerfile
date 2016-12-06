@@ -10,7 +10,8 @@ ENV \
     SSH="ssh -oStrictHostKeyChecking=no" \
     CHECK_TZ=0 \
     FILEBEAT="5.0.0-rc1" \
-    METRICS_PORT="9104"
+    METRICS_PORT="9104" \
+    GOPATH="/tmp/go"
 
 ADD my.cnf /root/.my.cnf
 

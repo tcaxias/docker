@@ -19,7 +19,7 @@ ENV \
     ADMIN_EMAIL="admin@admin.admin"
 
 RUN \
-    yum install -y epel-release && \
+    { yes | yum install -y epel-release; } && \
     curl "${RIAK_CS_DIR}/config_file.repo?os=${OS}&dist=${DIST}&name=$(hostname)" >> $REPO && \
     curl "${STANCHION_DIR}/config_file.repo?os=${OS}&dist=${DIST}&name=$(hostname)" >> $REPO && \
     yum install -y $PKGS && \
