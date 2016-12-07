@@ -3,9 +3,9 @@ FROM tcaxias/debian
 MAINTAINER Tiago Caxias http://github.com/tcaxias
 
 ENV \
-    EXPORTER="github.com/dcu/mongodb_exporter" \
+    EXPORTER="https://github.com/dcu/mongodb_exporter/releases/download/v1.0.0/mongodb_exporter-linux-amd64" \
     PKGS="supervisor percona-server-mongodb-32" \
-    DEPS="git golang-1.6-go ca-certificates" \
+    DEPS="curl ca-certificates" \
     GO="/usr/lib/go-1.6/bin/go" \
     PASSWD="" \
     MAINT_PORT="--port 21" \
@@ -19,9 +19,8 @@ RUN \
         > /etc/apt/sources.list.d/percona.list && \
     $APT update && \
     $APT install $PKGS $DEPS && \
-    $GO get $EXPORTER && \
-    mv $GOPATH/bin/* /app/ && \
-    rm -rf $GOPATH && \
+    curl -L $EXPORTER > /app/mongodb_exporter && \
+    chmod +x /app/mongodb_exporter && \
     $APT purge $DEPS && \
     apt-get -yqq autoremove && \
     rm -rf /var/lib/apt/lists/* && \
