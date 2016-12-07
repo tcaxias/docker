@@ -6,7 +6,6 @@ ENV \
     EXPORTER="https://github.com/dcu/mongodb_exporter/releases/download/v1.0.0/mongodb_exporter-linux-amd64" \
     PKGS="supervisor percona-server-mongodb-32" \
     DEPS="curl ca-certificates" \
-    GO="/usr/lib/go-1.6/bin/go" \
     PASSWD="" \
     MAINT_PORT="--port 21" \
     ENGINE="wiredTiger" \
