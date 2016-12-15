@@ -46,5 +46,5 @@ ADD start_riak.sh /app/
 RUN chmod +x /app/*.sh
 
 VOLUME "/var/lib/riak"
-EXPOSE 8087 8098 9104
+EXPOSE 8087 8098 9106
 CMD [ "supervisord", "-j", "/dev/shm/supervisor.pid", "-t" ]
