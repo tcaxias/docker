@@ -20,7 +20,7 @@ sed -i /etc/riak/riak.conf \
     -e "s#storage_backend = bitcask##" \
     -e "s#log.console = file#log.console = console#"
 
-[ "_$CERT_DIR" = "_" ] && \
+[ "_$CERT_DIR" = "_" ] || \
 sed -i /etc/riak/riak.conf \
     -e "s#listener.http.internal = 0.0.0.0:8098#listener.https.internal = 0.0.0.0:8098#" \
 
