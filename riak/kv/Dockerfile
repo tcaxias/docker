@@ -17,6 +17,7 @@ ENV \
     RING_SIZE="" \
     PASSWD="" \
     CERT_DIR="" \
+    METRICS_PORT="9106" \
     RIAK_KV_DIR="https://packagecloud.io/install/repositories/basho/riak" \
     RIAK_CS_DIR="https://packagecloud.io/install/repositories/basho/riak-cs" \
     UNZIP="python -c \"import zipfile,sys,StringIO;zipfile.ZipFile(StringIO.StringIO(sys.stdin.read())).extractall(sys.argv[1] if len(sys.argv) == 2 else '.')\"" \
