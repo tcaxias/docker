@@ -21,4 +21,4 @@ ADD start_stanchion.sh /app/
 RUN chmod +x /app/*.sh
 
 EXPOSE 8085
-CMD /app/start_stanchion.sh
+CMD exec /app/start_stanchion.sh

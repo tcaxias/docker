@@ -10,6 +10,8 @@ export KEY=$(curl -q $RIAK_IP:$RIAK_PORT/buckets/admin/keys/key | \
 export SECRET=$(curl -q $RIAK_IP:$RIAK_PORT/buckets/admin/keys/secret | \
     openssl enc -a -d -aes-256-cbc -nosalt -pass pass:$PASSWD -A)
 
+sed -i '/admin\./d' /etc/stanchion/stanchion.conf
+
 grep -q 'admin.key = ' /etc/stanchion/stanchion.conf || \
     echo "admin.key = $KEY" >> /etc/stanchion/stanchion.conf
 grep -q 'admin.secret' /etc/stanchion/stanchion.conf || \
