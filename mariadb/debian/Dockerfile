@@ -11,7 +11,8 @@ ENV \
     CHECK_TZ=0 \
     FILEBEAT="5.0.0-rc1" \
     METRICS_PORT="9104" \
-    GOPATH="/tmp/go"
+    GOPATH="/tmp/go" \
+    RO_SLAVE=1
 
 ADD my.cnf /root/.my.cnf
 
