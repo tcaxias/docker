@@ -74,9 +74,8 @@ sed -i /etc/riak-cs/riak-cs.conf \
     -e "s#log.console = file#log.console = console#" \
     -e "s#anonymous_user_creation = on#anonymous_user_creation = off#"
 
-grep -q 'admin.key = ' /etc/riak-cs/riak-cs.conf || \
-    echo "admin.key = $KEY" >> /etc/riak-cs/riak-cs.conf
-grep -q 'admin.secret = ' /etc/riak-cs/riak-cs.conf || \
-    echo "admin.secret = $SECRET" >> /etc/riak-cs/riak-cs.conf
+sed -i '/admin\./d' /etc/stanchion/stanchion.conf
+echo "admin.key = $KEY" >> /etc/riak-cs/riak-cs.conf
+echo "admin.secret = $SECRET" >> /etc/riak-cs/riak-cs.conf
 
 exec riak-cs console
