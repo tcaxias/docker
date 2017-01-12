@@ -5,7 +5,7 @@ ENV \
     PKGS="python openjdk8-jre-base" \
     DEPS="wget" \
     APK="apk --update --cache" \
-    PRESTO_VERSION="0.152.1"
+    PRESTO_VERSION="0.163"
 
 RUN \
     apk --no-cache --update add $PKGS $DEPS && \
