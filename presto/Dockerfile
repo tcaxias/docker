@@ -1,20 +1,20 @@
-FROM alpine:edge
+FROM openjdk:8-jre-alpine
 MAINTAINER Tiago Caxias http://github.com/tcaxias
 
 ENV \
-    PKGS="python openjdk8-jre-base" \
-    DEPS="wget" \
+    PKGS="python" \
+    DEPS="aria2" \
     APK="apk --update --cache" \
     PRESTO_VERSION="0.163"
 
 RUN \
     apk --no-cache --update add $PKGS $DEPS && \
     mkdir -p /app /var/presto/data && \
-    wget -q -O- \
-        https://repo1.maven.org/maven2/com/facebook/presto/presto-server/${PRESTO_VERSION}/presto-server-${PRESTO_VERSION}.tar.gz \
-        | tar -xzC /tmp/ && \
+    aria2c -q -x5 -j5 -o /tmp/presto.tgz \
+        https://repo1.maven.org/maven2/com/facebook/presto/presto-server/${PRESTO_VERSION}/presto-server-${PRESTO_VERSION}.tar.gz && \
+    tar -f /tmp/presto.tgz -xzC /tmp/ && \
     mv /tmp/presto-*/* /app && \
-    apk del wget && \
+    apk del $DEPS && \
     rm -rf /tmp/* /var/cache/apk
 
 WORKDIR /app/
