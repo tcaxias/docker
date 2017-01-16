@@ -1,0 +1,12 @@
+[template]
+src = "etc/proxysql.cnf"
+dest = "/etc/proxysql.cnf"
+keys = [
+    "/proxysql/admin/user",
+    "/proxysql/admin/pass",
+    "/proxysql/admin/ifaces",
+    "/proxysql/user/threads",
+    "/proxysql/user/maxconns",
+    "/proxysql/user/ifaces",
+    "/proxysql/db",
+]
