@@ -5,8 +5,10 @@ WORKDIR /app
 
 ENV \
     TERM=xterm \
-    DEBIAN_FRONTEND=noninteractive \
+    DEBIAN_FRONTEND="noninteractive" \
     APT="apt -yqq --no-install-recommends" \
     GOPATH="/tmp/go"
+
+RUN useradd -M app
 
 CMD bash
