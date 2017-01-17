@@ -28,9 +28,7 @@ ENV \
     PROXYSQL_ADMIN_IFACES="127.0.0.1:6032;/tmp/proxysql_admin.sock" \
     PROXYSQL_USER_IFACES="0.0.0.0:6033;/tmp/proxysql.sock" \
     PROXYSQL_USER_THREADS=4 \
-    PROXYSQL_USER_MAXCONNS=2048 \
-    PROXYSQL_DB_EXAMPLE='{ address="127.0.0.1" , port=3306 , hostgroup=0, max_connections=5 }' \
-    PROXYSQL_DBUSER_EXAMPLE='{ username = "user1" , password = "password" , default_hostgroup = 0 }'
+    PROXYSQL_USER_MAXCONNS=2048
 
 VOLUME ["/var/lib/proxysql","/tmp"]
 
@@ -38,6 +36,6 @@ CMD \
     { \
         [ "$CONFD" ] && \
         /bin/confd -onetime -backend=env; \
-    } && \
+    } ; \
     chown app. -R /var/lib/proxysql /var/log/supervisor && \
     exec supervisord -c /etc/supervisor/supervisord.conf
