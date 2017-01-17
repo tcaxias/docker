@@ -1,27 +1,25 @@
-FROM debian:jessie-backports
+FROM tcaxias/debian
 MAINTAINER Tiago Caxias http://github.com/tcaxias
 
-ENV DEBIAN_FRONTEND="noninteractive"
-
-ARG PKGS="libssl1.0.0"
-ARG DEPS="wget"
+ARG PKGS="libssl1.0.0 supervisor"
+ARG DEPS="wget ca-certificates"
 ARG PROXYSQL_URL="https://github.com/sysown/proxysql/releases/download/v1.3.2-1/proxysql_1.3.2-debian8_amd64.deb"
 ARG CONFD_URL="https://github.com/kelseyhightower/confd/releases/download/v0.11.0/confd-0.11.0-linux-amd64"
 
 RUN \
-    apt-get update && \
-    apt-get -y install ${PKGS} ${DEPS} && \
+    $APT update && \
+    $APT install ${PKGS} ${DEPS} && \
     wget -L -q -O- ${PROXYSQL_URL} > /tmp/proxysql.deb && \
     dpkg -i /tmp/proxysql.deb && \
-    apt-get -y install -f && \
+    $APT install -f && \
     wget -L -q -O- ${CONFD_URL} > /bin/confd && \
     chmod a+x /bin/confd && \
     apt-get purge -y ${DEPS} && \
     apt-get -y autoremove && \
-    rm -rf /var/lib/apt/lists/* /tmp/* && \
-    useradd -M app
+    rm -rf /var/lib/apt/lists/* /tmp/*
 
 ADD confd /etc/
+ADD proxysql.conf /etc/supervisor/conf.d/
 
 ENV \
     CONFD=1 \
@@ -41,7 +39,5 @@ CMD \
         [ "$CONFD" ] && \
         /bin/confd -onetime -backend=env; \
     } && \
-    chown app. -R /var/lib/proxysql && \
-    exec su - app -c "proxysql -f"
-
-ENV TERM=xterm
+    chown app. -R /var/lib/proxysql /var/log/supervisor && \
+    exec supervisord -c /etc/supervisor/supervisord.conf
