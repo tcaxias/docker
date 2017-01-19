@@ -6,10 +6,12 @@ Documentanion is in the github [wiki](https://github.com/sysown/proxysql/wiki) o
 
 - with cnf file
 
+
 	docker run -e CONFD='' --name proxysql --net host \
 	-v $PWD/proxysql.cnf:/etc/proxysql.cnf:ro -v $PWD/tmp:/tmp tcaxias/proxysql
 
 - with env variables
+
 
 	docker run --net host --name proxysql \
 	-e PROXYSQL_ADMIN_USER="admin" \
