@@ -4,7 +4,7 @@ MAINTAINER Tiago Caxias http://github.com/tcaxias
 ARG PKGS="libssl1.0.0 supervisor"
 ARG DEPS="wget ca-certificates"
 ARG PROXYSQL_URL="https://github.com/sysown/proxysql/releases/download/v1.3.2-1/proxysql_1.3.2-debian8_amd64.deb"
-ARG CONFD_URL="https://github.com/kelseyhightower/confd/releases/download/v0.11.0/confd-0.11.0-linux-amd64"
+ARG CONFD_URL="https://github.com/kelseyhightower/confd/releases/download/v0.12.0-alpha3/confd-0.12.0-alpha3-linux-amd64"
 
 RUN \
     $APT update && \
