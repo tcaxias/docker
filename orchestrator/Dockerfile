@@ -6,8 +6,7 @@ ENV \
     PKGS="py-setuptools python"
 
 RUN \
-    adduser -D -H app \
-    && apk add --update --no-cache $DEPS $PKGS \
+    apk add --update --no-cache $DEPS $PKGS \
     && go get github.com/prometheus/graphite_exporter \
     && mv $GOPATH/bin/* /usr/local/bin/ \
     && easy_install-2.7 pip \
@@ -15,6 +14,8 @@ RUN \
     && pip install supervisor \
     && apk del $DEPS \
     && rm -rf /tmp/*
+
+RUN adduser -D app
 
 ADD \
     supervisord.conf \
