@@ -23,6 +23,6 @@ ADD \
 
 CMD [ "/usr/bin/supervisord", "-c", "/etc/supervisord.conf", "-j", "/dev/shm/supervisor.pid", "-l", "/dev/null" ]
 
-EXPOSE 3000 9108
+EXPOSE 3000 9109
 
 ENV TERM=xterm
