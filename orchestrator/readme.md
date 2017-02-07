@@ -17,3 +17,13 @@ Examples on how to run this:
 
     docker run -v $PWD/orchestrator.conf.json:/etc/orchestrator.conf.json:ro \
         -p 3000:3000 -p 9108:9108 tcaxias/orchestrator
+
+    docker run -p 3000:3000 -p 9108:9108 \
+        -e ORC_TOPOLOGY_USER=orchestrator \
+        -e ORC_TOPOLOGY_PASSWORD="AwEsOmE_PaSsWoRd_w1th_numb3r5" \
+        -e ORC_DB_HOST="the.database.where.i.keep.orchestrator.data" \
+        -e ORC_DB_PORT=33066 \
+        -e ORC_DB_NAME="database_name_inside_the_ORC_DB_HOST" \
+        -e ORC_USER="username_for_the_ORC_DB_HOST" \
+        -e ORC_PASSWORD="password_for_the_ORC_DB_HOST"
+        tcaxias/orchestrator
