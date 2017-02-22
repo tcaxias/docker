@@ -3,7 +3,8 @@ FROM centos:7
 MAINTAINER Tiago Caxias http://github.com/tcaxias
 
 ENV \
-    PKGS="pygpgme openssl sudo" \
+    PKGS="pygpgme openssl sudo epel-release python-setuptools" \
+    EPEL_PKGS="nginx httpd-tools" \
     RIAK_IP="127.0.0.1" \
     RIAK_PORT="8098" \
     S3_HOST="s3.amazonaws.com" \
@@ -16,11 +17,21 @@ ENV \
 
 RUN \
     yum install -y $CS_CONTROL $PKGS && \
+    yum install -y $EPEL_PKGS && \
+    easy_install pip && \
+    pip install -U pip && \
+    pip install supervisor && \
     yum clean -y all
 
-ADD start_riak_cs_control.sh /app/
+ADD \
+    start_riak_cs_control.sh \
+    start_nginx.sh \
+    nginx.conf \
+    supervisord.conf \
+    /app/
 
 RUN chmod +x /app/*.sh
 
-EXPOSE 8000
-CMD /app/start_riak_cs_control.sh
+WORKDIR /app
+EXPOSE 80
+CMD [ "supervisord", "-j", "/dev/shm/supervisor.pid", "-t", "-c", "/app/supervisord.conf" ]

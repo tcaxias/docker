@@ -5,7 +5,8 @@ export KEY=$(curl -q $RIAK_IP:$RIAK_PORT/buckets/admin/keys/key | \
 export SECRET=$(curl -q $RIAK_IP:$RIAK_PORT/buckets/admin/keys/secret | \
     openssl enc -a -d -aes-256-cbc -nosalt -pass pass:$PASSWD -A)
 
-sed -i /etc/riak-cs-control/app.config \
+fgrep 'admin-key' /etc/riak-cs-control/app.config && \
+    sed -i /etc/riak-cs-control/app.config \
     -e "s#s3.amazonaws.com#$S3_HOST#" \
     -e "s#admin-key#$KEY#" \
     -e "s#admin-secret#$SECRET#" \
