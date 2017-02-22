@@ -7,7 +7,7 @@ ENV \
     RIAK_IP="127.0.0.1" \
     RIAK_PORT="8098" \
     S3_HOST="s3.amazonaws.com" \
-    RIAK_S2_PORT="8080" \
+    RIAK_S2_PORT="80" \
     RIAK_S2_PROTOCOL="http" \
     RIAK_S2_PROXY_HOST="127.0.0.1" \
     RIAK_S2_PROXY_PORT="8080" \
