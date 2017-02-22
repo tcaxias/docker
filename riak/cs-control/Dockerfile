@@ -8,11 +8,12 @@ ENV \
     RIAK_IP="127.0.0.1" \
     RIAK_PORT="8098" \
     S3_HOST="s3.amazonaws.com" \
-    RIAK_S2_PORT="80" \
-    RIAK_S2_PROTOCOL="http" \
-    RIAK_S2_PROXY_HOST="127.0.0.1" \
-    RIAK_S2_PROXY_PORT="8080" \
+    RIAK_CS_PORT="80" \
+    RIAK_CS_PROTOCOL="http" \
+    RIAK_CS_PROXY_HOST="127.0.0.1" \
+    RIAK_CS_PROXY_PORT="8080" \
     PASSWD="big_bad_secret" \
+    HTPASS="unsafe_secret" \
     CS_CONTROL="http://s3.amazonaws.com/downloads.basho.com/riak-cs-control/1.0/1.0.2/rhel/6/riak-cs-control-1.0.2-1.el6.x86_64.rpm"
 
 RUN \
