@@ -9,27 +9,24 @@ MAINTAINER Tiago Caxias http://github.com/tcaxias
 # https://docs.basho.com/riak/cs/latest/cookbooks/configuration/riak-cs/#enabling-ssl-in-riak-cs
 # https://docs.basho.com/riak/cs/latest/cookbooks/configuration/riak-cs/#enabling-ssl
 ENV \
-    PKGS="pygpgme riak riak-cs python stanchion jq openssl" \
-    DEPS="python-pip" \
+    PKGS="pygpgme riak riak-cs python stanchion jq openssl python-setuptools" \
     REPO="/etc/yum.repos.d/basho.repo" \
     OS="el" \
     DIST="7" \
     RING_SIZE="" \
-    PASSWD="" \
+    PASSWD="big_bad_secret" \
     CERT_DIR="" \
     S3_HOST="s3.amazonaws.com" \
     STANCHION="127.0.0.1:8085" \
     BOOTSTRAP=0 \
     ADMIN_NAME="admin" \
     ADMIN_EMAIL="admin@admin.admin" \
-    METRICS_PORT="9106" \
     RIAK_KV_DIR="https://packagecloud.io/install/repositories/basho/riak" \
     RIAK_CS_DIR="https://packagecloud.io/install/repositories/basho/riak-cs" \
-    STANCHION_DIR="https://packagecloud.io/install/repositories/basho/stanchion" \
-    UNZIP="python -c \"import zipfile,sys,StringIO;zipfile.ZipFile(StringIO.StringIO(sys.stdin.read())).extractall(sys.argv[1] if len(sys.argv) == 2 else '.')\"" \
-    RIAK_EXPORTER="https://github.com/anti1869/riak_exporter/archive/master.zip"
+    STANCHION_DIR="https://packagecloud.io/install/repositories/basho/stanchion"
 
 RUN \
+    yum install -y epel-release && \
     curl "${RIAK_KV_DIR}/config_file.repo?os=${OS}&dist=${DIST}&name=$(hostname)" >> $REPO && \
     curl "${RIAK_CS_DIR}/config_file.repo?os=${OS}&dist=${DIST}&name=$(hostname)" >> $REPO && \
     curl "${STANCHION_DIR}/config_file.repo?os=${OS}&dist=${DIST}&name=$(hostname)" >> $REPO && \
@@ -37,25 +34,21 @@ RUN \
     yum clean -y all
 
 RUN \
-    { yes | yum install -y epel-release; } && \
-    yum install -y $DEPS && \
-    pip install supervisor && \
-    curl -L $RIAK_EXPORTER | sh -c "$UNZIP /app" && \
-    cd /app/riak_exporter-master && \
-    python setup.py build install && \
-    cd / && rm -rf /app/riak_exporter-master && \
-    yum erase -y $DEPS && \
-    yum clean -y all
+    easy_install pip && \
+    pip install -U pip && \
+    pip install supervisor
 
 ADD advanced.config /etc/riak/
 ADD supervisord.conf /etc/
+
 ADD \
     start_riak_kv.sh \
     start_riak_cs.sh \
     start_stanchion.sh \
     /app/
+
 RUN chmod +x /app/*.sh
 
 VOLUME "/var/lib/riak"
-EXPOSE 8080 8085 9106
+EXPOSE 8080 8085
 CMD [ "supervisord", "-j", "/dev/shm/supervisor.pid", "-t" ]

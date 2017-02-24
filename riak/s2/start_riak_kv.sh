@@ -34,7 +34,7 @@ if [ "_$PASSWD" != "_" ]; then
     sed -i /etc/riak/riak.conf \
         -e "s#riak_control.auth.mode = off#riak_control.auth.mode = userlist#"
 
-    grep -q 'riak_control.auth.user.admin.password' /etc/riak/riak.conf || \
+    grep -q '^riak_control.auth.user.admin.password' /etc/riak/riak.conf || \
         echo "riak_control.auth.user.admin.password = $PASSWD" >> /etc/riak/riak.conf
 fi
 

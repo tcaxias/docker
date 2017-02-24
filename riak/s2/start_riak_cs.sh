@@ -25,6 +25,7 @@ done
 
 if [ $BOOTSTRAP -eq 1 ] && \
     [ "$(curl -s 127.0.0.1:8098/buckets/admin/keys/secret)" = 'not found' ]; then
+    supervisorctl stop stanchion
     # First run - set the admin user
     sed -i /etc/riak-cs/riak-cs.conf \
         -e "s#admin.key = admin-key##" \
@@ -75,7 +76,11 @@ sed -i /etc/riak-cs/riak-cs.conf \
     -e "s#anonymous_user_creation = on#anonymous_user_creation = off#"
 
 sed -i '/admin\./d' /etc/stanchion/stanchion.conf
-echo "admin.key = $KEY" >> /etc/riak-cs/riak-cs.conf
-echo "admin.secret = $SECRET" >> /etc/riak-cs/riak-cs.conf
 
+fgrep "admin.key = $KEY" /etc/riak-cs/riak-cs.conf || \
+    echo "admin.key = $KEY" >> /etc/riak-cs/riak-cs.conf
+fgrep "admin.secret = $SECRET" /etc/riak-cs/riak-cs.conf || \
+    echo "admin.secret = $SECRET" >> /etc/riak-cs/riak-cs.conf
+
+supervisorctl start stanchion
 exec riak-cs console
