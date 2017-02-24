@@ -1,6 +1,6 @@
 #!/bin/sh
 
-until fgrep 'admin.passwd = ' /etc/riak-cs/riak-cs.conf >> \
+until fgrep 'admin.secret = ' /etc/riak-cs/riak-cs.conf >> \
     /etc/stanchion/stanchion.conf ; do sleep 5 ; done
 
 sed -i /etc/stanchion/stanchion.conf \

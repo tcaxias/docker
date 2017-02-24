@@ -75,7 +75,7 @@ sed -i /etc/riak-cs/riak-cs.conf \
     -e "s#log.console = file#log.console = console#" \
     -e "s#anonymous_user_creation = on#anonymous_user_creation = off#"
 
-sed -i '/admin\./d' /etc/stanchion/stanchion.conf
+sed -i '/admin\./d' /etc/riak-cs/riak-cs.conf
 
 grep "^admin.key =" /etc/riak-cs/riak-cs.conf || \
     echo "admin.key = $KEY" >> /etc/riak-cs/riak-cs.conf
