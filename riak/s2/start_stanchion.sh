@@ -14,9 +14,9 @@ export SECRET=$(curl -q 127.0.0.1:8098/buckets/admin/keys/secret | \
 
 sed -i '/admin\./d' /etc/stanchion/stanchion.conf
 
-fgrep "admin.key = $KEY" /etc/stanchion/stanchion.conf || \
+grep "^admin.key =" /etc/stanchion/stanchion.conf || \
     echo "admin.key = $KEY" >> /etc/stanchion/stanchion.conf
-fgrep "admin.secret = $SECRET" /etc/stanchion/stanchion.conf || \
+grep "^admin.secret =" /etc/stanchion/stanchion.conf || \
     echo "admin.secret = $SECRET" >> /etc/stanchion/stanchion.conf
 
 exec stanchion console

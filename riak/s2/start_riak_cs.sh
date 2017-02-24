@@ -77,9 +77,9 @@ sed -i /etc/riak-cs/riak-cs.conf \
 
 sed -i '/admin\./d' /etc/stanchion/stanchion.conf
 
-fgrep "admin.key = $KEY" /etc/riak-cs/riak-cs.conf || \
+grep "^admin.key =" /etc/riak-cs/riak-cs.conf || \
     echo "admin.key = $KEY" >> /etc/riak-cs/riak-cs.conf
-fgrep "admin.secret = $SECRET" /etc/riak-cs/riak-cs.conf || \
+grep "^admin.secret =" /etc/riak-cs/riak-cs.conf || \
     echo "admin.secret = $SECRET" >> /etc/riak-cs/riak-cs.conf
 
 supervisorctl start stanchion
