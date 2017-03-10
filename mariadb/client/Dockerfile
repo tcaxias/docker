@@ -3,7 +3,7 @@ MAINTAINER Tiago Caxias http://github.com/tcaxias
 
 ENV \
     TERM=xterm \
-    PKGS="mariadb-client openssh" \
+    PKGS="mariadb-client openssh bash" \
     USER="sql" \
     MY_USER="sql" \
     MY_PASS="sql" \
@@ -18,8 +18,7 @@ RUN \
     ssh-keygen -A
 
 CMD \
-    set -x && \
-    adduser -D $USER && \
+    adduser -D -s /bin/bash $USER && \
     passwd -u $USER && \
     USER_HOME="$(eval echo ~${USER})" && \
     echo "this" $USER_HOME && \
