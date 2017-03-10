@@ -3,7 +3,7 @@ MAINTAINER Tiago Caxias http://github.com/tcaxias
 
 ENV \
     TERM=xterm \
-    PKGS="mariadb-client openssh pigz" \
+    PKGS="mariadb-client openssh" \
     USER="sql" \
     MY_USER="sql" \
     MY_PASS="sql" \
