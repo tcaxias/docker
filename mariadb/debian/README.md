@@ -2,5 +2,4 @@
 
 To try it for the example.cnf provided a simple way would be
 
-    docker build -t tcaxias/mariadb .
-    docker run -d --name mariadb3 --expose 3111-3114 --net host -v $PWD/:/etc/mysql/conf.d tcaxias/mariadb
+    docker run -d --name mariadb --net host -v $PWD/:/etc/mysql/conf.d tcaxias/mariadb

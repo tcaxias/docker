@@ -3,13 +3,17 @@ FROM tcaxias/debian
 MAINTAINER Tiago Caxias http://github.com/tcaxias
 
 ENV \
-    PKGS="percona-xtrabackup-24 mariadb-server-10.1 supervisor socat tzdata xinetd" \
+    PKGS="percona-xtrabackup-24 mariadb-server-10.1 python-setuptools socat dropbear tzdata filebeat" \
     GIT_SSL_NO_VERIFY=true \
-    DEPS="git golang-1.6-go apt-transport-https wget" \
+    DEPS="git golang-1.6-go wget ca-certificates apt-transport-https" \
     GO="/usr/lib/go-1.6/bin/go" \
     SSH="ssh -oStrictHostKeyChecking=no" \
     CHECK_TZ=0 \
-    METRICS_PORT="9104"
+    FILEBEAT="5.2.2" \
+    METRICS_PORT="9104" \
+    GOPATH="/tmp/go" \
+    RO_SLAVE=1 \
+    HEALTH_API_PORT=60000
 
 ADD my.cnf /root/.my.cnf
 
@@ -21,38 +25,44 @@ RUN touch /root/.my.cnf && \
         /root/.ssh
 
 RUN \
+    $APT update && \
+    $APT install $DEPS && \
     apt-key adv --recv-keys --keyserver keyserver.ubuntu.com 0xcbcb082a1bb943db && \
     echo 'deb [arch=amd64] http://lon1.mirrors.digitalocean.com/mariadb/repo/10.1/debian jessie main' \
         > /etc/apt/sources.list.d/mariadb.list && \
     apt-key adv --keyserver keys.gnupg.net --recv-keys 9334A25F8507EFA5 && \
     echo 'deb [arch=amd64] http://repo.percona.com/apt jessie main' \
         > /etc/apt/sources.list.d/percona.list && \
+    wget -qO - https://artifacts.elastic.co/GPG-KEY-elasticsearch | apt-key add - && \
+    echo "deb https://artifacts.elastic.co/packages/5.x/apt stable main" \
+        > /etc/apt/sources.list.d/elastic-5.x.list && \
     $APT update && \
     $APT upgrade && \
-    $APT install $PKGS $DEPS && \
+    $APT install $PKGS && \
     $GO get github.com/prometheus/mysqld_exporter && \
     mv $GOPATH/bin/mysqld_exporter . && \
     rm -rf $GOPATH && \
-    git clone https://github.com/github/mysql-haproxy-xinetd && \
-    mv mysql-haproxy-xinetd/scripts . && \
-    mv mysql-haproxy-xinetd/xinetd/xinetd.conf /etc && \
-    mv mysql-haproxy-xinetd/xinetd/mysql* /etc/xinetd.d && \
-    rm -rf mysql-haproxy-xinetd && \
+    easy_install pip && \
+    pip install -U pip && \
+    pip install supervisor flask mysql-connector && \
     $APT purge $DEPS && \
     apt-get -yqq autoremove && \
     rm -rf /var/lib/apt/lists/* && \
     rm -rf /var/lib/mysql/* && \
     find / -name "*.a" -exec rm -f {} \;
 
-# I want to add the mysql-haproxy-xinetd to /etc/services
-# I want to add the full path to the scripts
-
 ADD \
+    https://raw.githubusercontent.com/tcaxias/utils/master/dropbear/dropbear.sh \
     https://raw.githubusercontent.com/tcaxias/utils/master/get_mysql_port/get_mysql_port.sh \
     https://raw.githubusercontent.com/tcaxias/utils/master/mysql_monitor/mysql_monitor.sh \
     https://raw.githubusercontent.com/tcaxias/utils/master/mysql_supervisord/supervisord.conf \
     https://raw.githubusercontent.com/tcaxias/utils/master/start_mysql/start_mysql.sh \
+    https://raw.githubusercontent.com/tcaxias/utils/master/mysql_health_api/health.py \
     /app/
+
+# filebeat doesn't get killed by supervisor properly - this is a simple fix
+RUN sed -i -r -e 's#^/usr#exec /usr#' /usr/bin/filebeat.sh
+ADD filebeat.yml /etc/
 
 RUN chmod +x *.sh
 VOLUME [ "/var/lib/mysql", "/var/log/mysql", "/etc/mysql/conf.d", "/var/run/mysqld" ]
