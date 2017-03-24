@@ -43,7 +43,7 @@ output.console:
 output.kafka:
   enabled: ${KAFKA_LOGS:false}
   version: "0.10"
-  hosts: ${KAFKA_BROKER_LIST:"127.0.0.1:9092"}
+  hosts: ${KAFKA_BROKER_LIST}
   topic: ${KAFKA_TOPIC:"couchbase_logs"}
   partition.round_robin:
     reachable_only: true

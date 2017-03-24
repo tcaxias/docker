@@ -1,24 +1,23 @@
 FROM couchbase:community
 
 ENV \
-    PKGS="python-setuptools" \
+    PKGS="python-setuptools filebeat" \
     GOPATH="/tmp/go" \
-    DEPS="ca-certificates" \
+    DEPS="ca-certificates wget apt-transport-https" \
     PIP_PKGS="supervisor" \
-    FILEBEAT="5.0.0-rc1" \
     KAFKA_LOGS="false" \
     KAFKA_BROKER_LIST='"127.0.0.1:9092"'
 
 RUN \
     apt-get update && \
-    apt-get install -yqq $DEPS $PKGS && \
+    apt-get install -yqq $DEPS && \
+    wget -qO - https://artifacts.elastic.co/GPG-KEY-elasticsearch | apt-key add - && \
+    echo "deb https://artifacts.elastic.co/packages/5.x/apt stable main" | tee -a /etc/apt/sources.list.d/elastic-5.x.list && \
+    apt-get update && \
+    apt-get install -yqq $PKGS && \
     easy_install pip && \
     pip install -U pip && \
     pip install supervisor && \
-    wget -q https://artifacts.elastic.co/downloads/beats/filebeat/filebeat-${FILEBEAT}-amd64.deb && \
-    dpkg -i filebeat-${FILEBEAT}-amd64.deb && \
-    rm -f filebeat-${FILEBEAT}-amd64.deb && \
-    apt-get install -f -yqq && \
     apt-get purge $DEPS -y && \
     apt-get autoremove -y
 
