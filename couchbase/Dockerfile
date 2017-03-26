@@ -29,5 +29,4 @@ WORKDIR /app
 ADD start.sh /app/
 
 ENV TERM='xterm'
-EXPOSE 9131
 ENTRYPOINT ["/bin/sh","/app/start.sh"]

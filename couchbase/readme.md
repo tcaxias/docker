@@ -1,7 +1,6 @@
 ## Simple container extending Couchbase's one
 
 This one will present all log files on docker logs and may also send them to kafka.
-It also has a simplistic prometheus exporter.
 
 To run this please follow Couchbase's instructions @ https://hub.docker.com/r/couchbase/server/
 Most attention should to to:

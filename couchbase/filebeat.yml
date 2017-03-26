@@ -31,6 +31,7 @@ filebeat.prospectors:
     - /opt/couchbase/var/lib/couchbase/logs/indexer.log
     - /opt/couchbase/var/lib/couchbase/logs/projector.log
     - /opt/couchbase/var/lib/couchbase/logs/query.log
+    - /tmp/supervisord.log
   encoding: utf-8
   document_type: couchbase
   fields:
