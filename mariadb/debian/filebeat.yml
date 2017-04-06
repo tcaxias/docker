@@ -1,8 +1,8 @@
 filebeat.prospectors:
 - paths:
-    - /dev/shm/mysql-slow.log
+    - /var/log/mysql/*slow.log
   encoding: utf-8
-  document_type: mysql
+  document_type: mysql_slow_log
   exclude_lines: ['^# Time:']
   multiline:
     pattern: '^# User@Host'
