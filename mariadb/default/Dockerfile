@@ -5,8 +5,8 @@ MAINTAINER Tiago Caxias http://github.com/tcaxias
 ENV \
     PKGS="percona-xtrabackup-24 mariadb-server-10.1 python-setuptools socat dropbear tzdata filebeat" \
     GIT_SSL_NO_VERIFY=true \
-    DEPS="git golang-1.6-go wget ca-certificates apt-transport-https" \
-    GO="/usr/lib/go-1.6/bin/go" \
+    DEPS="git golang-1.7-go wget ca-certificates apt-transport-https" \
+    GO="/usr/lib/go-1.7/bin/go" \
     SSH="ssh -oStrictHostKeyChecking=no" \
     CHECK_TZ=0 \
     METRICS_PORT="9104" \
