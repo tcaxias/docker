@@ -9,7 +9,6 @@ ENV \
     GO="/usr/lib/go-1.6/bin/go" \
     SSH="ssh -oStrictHostKeyChecking=no" \
     CHECK_TZ=0 \
-    FILEBEAT="5.2.2" \
     METRICS_PORT="9104" \
     GOPATH="/tmp/go" \
     RO_SLAVE=1 \

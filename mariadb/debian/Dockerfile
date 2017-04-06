@@ -3,13 +3,12 @@ FROM tcaxias/debian
 MAINTAINER Tiago Caxias http://github.com/tcaxias
 
 ENV \
-    PKGS="percona-xtrabackup-24 mariadb-server-10.1 supervisor socat dropbear tzdata" \
+    PKGS="percona-xtrabackup-24 mariadb-server-10.1 supervisor socat dropbear tzdata filebeat" \
     GIT_SSL_NO_VERIFY=true \
-    DEPS="git golang-1.6-go wget ca-certificates" \
+    DEPS="git golang-1.6-go wget ca-certificates apt-transport-https" \
     GO="/usr/lib/go-1.6/bin/go" \
     SSH="ssh -oStrictHostKeyChecking=no" \
     CHECK_TZ=0 \
-    FILEBEAT="5.0.0-rc1" \
     METRICS_PORT="9104" \
     GOPATH="/tmp/go" \
     RO_SLAVE=1
@@ -24,19 +23,20 @@ RUN touch /root/.my.cnf && \
         /root/.ssh
 
 RUN \
+    $APT update && \
+    $APT install $DEPS && \
     apt-key adv --recv-keys --keyserver keyserver.ubuntu.com 0xcbcb082a1bb943db && \
     echo 'deb [arch=amd64] http://lon1.mirrors.digitalocean.com/mariadb/repo/10.1/debian jessie main' \
         > /etc/apt/sources.list.d/mariadb.list && \
     apt-key adv --keyserver keys.gnupg.net --recv-keys 9334A25F8507EFA5 && \
     echo 'deb [arch=amd64] http://repo.percona.com/apt jessie main' \
         > /etc/apt/sources.list.d/percona.list && \
+    wget -qO - https://artifacts.elastic.co/GPG-KEY-elasticsearch | apt-key add - && \
+    echo "deb https://artifacts.elastic.co/packages/5.x/apt stable main" \
+        > /etc/apt/sources.list.d/elastic-5.x.list && \
     $APT update && \
     $APT upgrade && \
     $APT install $PKGS $DEPS && \
-    wget -q https://artifacts.elastic.co/downloads/beats/filebeat/filebeat-${FILEBEAT}-amd64.deb && \
-    dpkg -i filebeat-${FILEBEAT}-amd64.deb && \
-    rm -f filebeat-${FILEBEAT}-amd64.deb && \
-    apt-get install -f -yqq && \
     $GO get github.com/prometheus/mysqld_exporter && \
     mv $GOPATH/bin/mysqld_exporter . && \
     rm -rf $GOPATH && \
