@@ -7,7 +7,7 @@ ENV \
     EXPORTER="github.com/oliver006/redis_exporter" \
     CONF="daemonize no |save \"''\" |bind 0.0.0.0" \
     PKGS="supervisor redis" \
-    DEPS="git go build-base py-pip" \
+    DEPS="git go py-pip musl-dev" \
     GOPATH="/tmp/go" \
     PASSWD=""
 
