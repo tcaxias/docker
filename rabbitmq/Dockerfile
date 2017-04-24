@@ -23,8 +23,10 @@ RUN \
     pip install $PIP_PKGS && \
     apt purge $DEPS -y && \
     apt-get autoremove -y && \
-    rm -rf /var/lib/apt/lists/* && \
-    rm -rf /var/lib/mysql/* && \
+    rm -rf \
+        /var/lib/apt/lists/* \
+        /usr/share/doc/* \
+        /usr/share/man/* && \
     find / -name "*.a" -exec rm -f {} \;
 
 ADD \
