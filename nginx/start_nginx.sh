@@ -5,4 +5,9 @@ if [ "_$HTPASS" != '_' ]; then
     chown nginx. /app/http_passwords
 fi
 
-exec nginx -g 'daemon off;'
+CONF=''
+if [ "_$CNF" != '_' ]; then
+    CONF=" -c $CNF "
+fi
+
+exec nginx -g 'daemon off;' $CONF
