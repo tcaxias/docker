@@ -1,4 +1,4 @@
-# Nginx container so server static content with HTPASS
+# Nginx container to server static content with HTPASS
 
 Example usage:
 

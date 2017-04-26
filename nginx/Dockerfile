@@ -11,8 +11,8 @@ RUN \
 ADD start_nginx.sh nginx.conf /app/
 
 ENV \
-    CNF='' \
-    HTPASS=''
+    CNF='/etc/nginx/nginx.cnf' \
+    HTPASS='pass'
 
 VOLUME ["/etc/nginx/","/app/www", "/app/ssl"]
 EXPOSE 80
