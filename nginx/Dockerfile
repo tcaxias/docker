@@ -15,5 +15,5 @@ ENV \
     HTPASS='pass'
 
 VOLUME ["/etc/nginx/","/app/www", "/app/ssl"]
-EXPOSE 80
+EXPOSE 8484
 CMD ["/bin/ash", "/app/start_nginx.sh"]

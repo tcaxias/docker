@@ -3,7 +3,7 @@ FROM tcaxias/debian
 MAINTAINER Tiago Caxias http://github.com/tcaxias
 
 ENV \
-    PKGS="percona-xtrabackup-24 mariadb-server-10.1 python-setuptools socat dropbear tzdata filebeat" \
+    PKGS="percona-xtrabackup-24 mariadb-server-10.1 python-setuptools socat dropbear tzdata filebeat wget" \
     GIT_SSL_NO_VERIFY=true \
     DEPS="git golang-1.7-go wget ca-certificates apt-transport-https" \
     GO="/usr/lib/go-1.7/bin/go" \
