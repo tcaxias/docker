@@ -1,18 +1,16 @@
 # Container for MariaDB 10.1
 FROM tcaxias/debian
 MAINTAINER Tiago Caxias http://github.com/tcaxias
-
+# PIP_PKGS="flask mysql-connector"
 ENV \
-    PKGS="percona-xtrabackup-24 mariadb-server-10.1 python-setuptools socat dropbear tzdata filebeat wget" \
-    GIT_SSL_NO_VERIFY=true \
-    DEPS="git golang-1.7-go wget ca-certificates apt-transport-https" \
+    PKGS="percona-xtrabackup-24 mariadb-server-10.1 python-setuptools filebeat wget pigz" \
+    DEPS="wget ca-certificates apt-transport-https" \
     GO="/usr/lib/go-1.7/bin/go" \
-    SSH="ssh -oStrictHostKeyChecking=no" \
     CHECK_TZ=0 \
-    METRICS_PORT="9104" \
     GOPATH="/tmp/go" \
     RO_SLAVE=1 \
-    HEALTH_API_PORT=60000
+    RM_DIRS="/usr/share/doc /usr/share/man /usr/share/info /usr/share/doc-base /usr/share/systemd /var/lib/apt/lists /var/lib/mysql" \
+    HEALTH_API_PORT=63306
 
 ADD my.cnf /root/.my.cnf
 
@@ -20,8 +18,7 @@ RUN touch /root/.my.cnf && \
     mkdir -p \
         /etc/mysql/conf.d \
         /run/mysqld \
-        /var/run/mysqld/tmp \
-        /root/.ssh
+        /var/run/mysqld/tmp
 
 RUN \
     $APT update && \
@@ -38,25 +35,19 @@ RUN \
     $APT update && \
     $APT upgrade && \
     $APT install $PKGS && \
-    $GO get github.com/prometheus/mysqld_exporter && \
-    mv $GOPATH/bin/mysqld_exporter . && \
-    rm -rf $GOPATH && \
     easy_install pip && \
     pip install -U pip && \
-    pip install supervisor flask mysql-connector && \
+    pip install supervisor $PIP_PKGS && \
     $APT purge $DEPS && \
     apt-get -yqq autoremove && \
-    rm -rf /var/lib/apt/lists/* && \
-    rm -rf /var/lib/mysql/* && \
+    for i in $RM_DIRS ; do rm -rf $RM_DIRS/* ; done && \
     find / -name "*.a" -exec rm -f {} \;
 
 ADD \
-    https://raw.githubusercontent.com/tcaxias/utils/master/dropbear/dropbear.sh \
-    https://raw.githubusercontent.com/tcaxias/utils/master/get_mysql_port/get_mysql_port.sh \
-    https://raw.githubusercontent.com/tcaxias/utils/master/mysql_monitor/mysql_monitor.sh \
-    https://raw.githubusercontent.com/tcaxias/utils/master/mysql_supervisord/supervisord.conf \
-    https://raw.githubusercontent.com/tcaxias/utils/master/start_mysql/start_mysql.sh \
-    https://raw.githubusercontent.com/tcaxias/utils/master/mysql_health_api/health.py \
+    utils/listen.sh \
+    utils/mysql_monitor.sh \
+    utils/supervisord.conf \
+    utils/start_mysql.sh \
     /app/
 
 # filebeat doesn't get killed by supervisor properly - this is a simple fix

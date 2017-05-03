@@ -3,9 +3,9 @@ FROM tcaxias/debian
 MAINTAINER Tiago Caxias http://github.com/tcaxias
 
 ENV \
-    PKGS="percona-xtrabackup-24 mariadb-server-10.1 supervisor socat dropbear tzdata filebeat" \
+    PKGS="percona-xtrabackup-24 mariadb-server-10.1 supervisor socat dropbear tzdata filebeat wget apt-transport-https pigz" \
     GIT_SSL_NO_VERIFY=true \
-    DEPS="git golang-1.7-go wget ca-certificates apt-transport-https" \
+    DEPS="git golang-1.7-go wget apt-transport-https" \
     GO="/usr/lib/go-1.7/bin/go" \
     SSH="ssh -oStrictHostKeyChecking=no" \
     CHECK_TZ=0 \
