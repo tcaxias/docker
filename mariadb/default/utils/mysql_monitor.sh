@@ -81,6 +81,7 @@ do
     elif [ "$slave" = "-1" ]; then
         state=$(check_galera)
     else
+        set_ro
         lag=$(check_lag)
         [ "NULL" = "$lag" ] && lag=$timeout
     fi
@@ -88,7 +89,6 @@ do
     if [ "0$state" -eq 4 ] || [ "0$state" -eq 9 ] || [ "0$lag" -lt "0$timeout" ]; then
         tzs=$(check_tzs)
         if [ "0$tzs" -ge $minimum_tzs ] && [ ! -f '/app/no_listen' ]; then
-            set_ro
             $(start_listen)
         else
             $(stop_listen)
