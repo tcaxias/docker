@@ -1,10 +1,10 @@
 # Container for MariaDB 10.1
 FROM tcaxias/debian
 MAINTAINER Tiago Caxias http://github.com/tcaxias
-# PIP_PKGS="flask mysql-connector"
+
 ENV \
-    PKGS="percona-xtrabackup-24 mariadb-server-10.1 python-setuptools filebeat wget pigz" \
-    DEPS="wget ca-certificates apt-transport-https" \
+    PKGS="percona-xtrabackup-24 mariadb-server-10.1 supervisor filebeat wget pigz apt-transport-https" \
+    DEPS="git golang-1.7-go wget apt-transport-https ca-certificates" \
     GO="/usr/lib/go-1.7/bin/go" \
     CHECK_TZ=0 \
     GOPATH="/tmp/go" \
@@ -30,21 +30,22 @@ RUN \
     echo 'deb [arch=amd64] http://repo.percona.com/apt jessie main' \
         > /etc/apt/sources.list.d/percona.list && \
     wget -qO - https://artifacts.elastic.co/GPG-KEY-elasticsearch | apt-key add - && \
-    echo "deb https://artifacts.elastic.co/packages/5.x/apt stable main" \
+    echo "deb http://artifacts.elastic.co/packages/5.x/apt stable main" \
         > /etc/apt/sources.list.d/elastic-5.x.list && \
     $APT update && \
     $APT upgrade && \
     $APT install $PKGS && \
-    easy_install pip && \
-    pip install -U pip && \
-    pip install supervisor $PIP_PKGS && \
+    $GO get github.com/hugomcfonseca/mysql_health_api && \
+    chmod +x $GOPATH/bin/* && \
+    mv $GOPATH/bin/* . && \
+    rm -rf $GOPATH && \
     $APT purge $DEPS && \
+    $APT install $PKGS && \
     apt-get -yqq autoremove && \
     for i in $RM_DIRS ; do rm -rf $RM_DIRS/* ; done && \
     find / -name "*.a" -exec rm -f {} \;
 
 ADD \
-    utils/listen.sh \
     utils/mysql_monitor.sh \
     utils/supervisord.conf \
     utils/start_mysql.sh \

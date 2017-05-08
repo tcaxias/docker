@@ -10,4 +10,4 @@ PORT=$(($PORT+1))
 mkdir -p /tmp/.bogus
 cd /tmp/.bogus
 
-exec su nobody -s /bin/sh -c "python -mSimpleHTTPServer $PORT"
+exec python -mSimpleHTTPServer $PORT
