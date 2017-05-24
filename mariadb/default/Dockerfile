@@ -6,10 +6,9 @@ ENV \
     PKGS="percona-xtrabackup-24 mariadb-server-10.1 supervisor filebeat wget pigz apt-transport-https" \
     DEPS="git golang-1.7-go wget apt-transport-https ca-certificates" \
     GO="/usr/lib/go-1.7/bin/go" \
-    CHECK_TZ=0 \
     GOPATH="/tmp/go" \
-    RO_SLAVE=1 \
     RM_DIRS="/usr/share/doc /usr/share/man /usr/share/info /usr/share/doc-base /usr/share/systemd /var/lib/apt/lists /var/lib/mysql" \
+    RO_SLAVE=1 \
     HEALTH_API_PORT=63306
 
 ADD my.cnf /root/.my.cnf
@@ -50,11 +49,12 @@ ADD \
     utils/supervisord.conf \
     utils/start_mysql.sh \
     /app/
+RUN chmod +x *.sh
 
 # filebeat doesn't get killed by supervisor properly - this is a simple fix
 RUN sed -i -r -e 's#^/usr#exec /usr#' /usr/bin/filebeat.sh
 ADD filebeat.yml /etc/
 
-RUN chmod +x *.sh
 VOLUME [ "/var/lib/mysql", "/var/log/mysql", "/etc/mysql/conf.d", "/var/run/mysqld" ]
 CMD [ "supervisord", "-c", "/app/supervisord.conf", "-j", "/dev/shm/supervisor.pid", "-l", "/dev/null" ]
+EXPOSE 3306 63306
