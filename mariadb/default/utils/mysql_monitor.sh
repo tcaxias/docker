@@ -19,5 +19,8 @@ if [ "_$RECOVER_FROM" != '_' ] && [ ! -f '/var/lib/mysql/replicating_from' ]; th
     mysql -e "$CMD_START" && \
         echo $CMD_POS | \
         tee /var/lib/mysql/replicating_from
-    [ $RO_SLAVE ] && $mysql -e'set global read_only=1;'
 fi
+
+$mysql -e"show slave status\G" | fgrep Master_Host && \
+    [ $RO_SLAVE ] && \
+    $mysql -e'set global read_only=1;'
