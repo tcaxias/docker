@@ -2,8 +2,8 @@
 
 [ -n "$MYSQL_USER" ] && MYSQL_USER=" -u $MYSQL_USER"
 [ -n "$MYSQL_PASSWD" ] && MYSQL_PASSWD=" -p$MYSQL_PASSWD"
-
 mysql="mysql $MYSQL_USER $MYSQL_PASSWD $MYOPTS"
+
 $mysql -Nrse"select 1" > /dev/null || { echo "no mysql access using $mysql" && sleep 30s && exit 1; }
 
 if [ "_$RECOVER_FROM" != '_' ] && [ ! -f '/var/lib/mysql/replicating_from' ]; then
@@ -21,6 +21,10 @@ if [ "_$RECOVER_FROM" != '_' ] && [ ! -f '/var/lib/mysql/replicating_from' ]; th
         tee /var/lib/mysql/replicating_from
 fi
 
-$mysql -e"show slave status\G" | fgrep Master_Host && \
-    [ $RO_SLAVE ] && \
-    $mysql -e'set global read_only=1;'
+while sleep 2; do
+    if ! $mysql -e"show slave status\G" | fgrep -q Master_Host && \
+        $mysql -Nrse"select * from information_schema.processlist where command='binlog dump'" | \
+            fgrep -q Dump; then
+                $mysql -e'set global read_only=0;'
+    fi
+done
