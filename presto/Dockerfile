@@ -1,11 +1,12 @@
-FROM alpine:edge
+FROM alpine
 MAINTAINER Tiago Caxias http://github.com/tcaxias
 
 ENV \
+    TERM=xterm \
     PKGS="python openjdk8-jre-base" \
     DEPS="aria2" \
     APK="apk --update --cache" \
-    PRESTO_VERSION="0.163"
+    PRESTO_VERSION="0.177"
 
 RUN \
     apk --no-cache --update add $PKGS $DEPS && \
@@ -21,5 +22,3 @@ WORKDIR /app/
 VOLUME /app/etc
 
 CMD [ "/app/bin/launcher", "run" ]
-
-ENV TERM=xterm
