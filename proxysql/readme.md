@@ -1,6 +1,6 @@
 # Container for ProxySQL
 ProxySQL code is at [github](https://github.com/sysown/proxysql).
-Documentanion is in the github [wiki](https://github.com/sysown/proxysql/wiki) or in the *[doc](https://github.com/sysown/proxysql/tree/master/doc)* folder.
+Documentation is in the github [wiki](https://github.com/sysown/proxysql/wiki) or in the *[doc](https://github.com/sysown/proxysql/tree/master/doc)* folder.
 
 # Usage
 
@@ -20,6 +20,6 @@ Documentanion is in the github [wiki](https://github.com/sysown/proxysql/wiki) o
     -e PROXYSQL_USER_IFACES="0.0.0.0:6033;/tmp/proxysql.sock" \
     -e PROXYSQL_USER_THREADS=$(fgrep bogomips /proc/cpuinfo|wc -l) \
     -e PROXYSQL_USER_MAXCONNS=10000 \
-	-e PROXYSQL_DB_42='{ address="192.168.168.196" , port=33066 , hostgroup=42, max_connections=42 }' \
+	-e PROXYSQL_DB_42='{ address="192.168.42.42" , port=4242 , hostgroup=42, max_connections=42 }' \
     -e PROXYSQL_DBUSER_42='{ username = "sam_and_max" , password = "hit_the_road" , default_hostgroup = 42 }' \
 	-v $PWD/tmp:/tmp tcaxias/proxysql
