@@ -3,13 +3,14 @@ FROM tcaxias/debian
 MAINTAINER Tiago Caxias http://github.com/tcaxias
 
 ENV \
-    PKGS="percona-xtrabackup-24 mariadb-server-10.1 supervisor filebeat wget pigz apt-transport-https" \
+    PKGS="percona-xtrabackup-24 mariadb-server-10.1 supervisor filebeat wget pigz apt-transport-https haproxy proxysql" \
     DEPS="git golang-1.7-go wget apt-transport-https ca-certificates" \
     GO="/usr/lib/go-1.7/bin/go" \
     GOPATH="/tmp/go" \
     RM_DIRS="/usr/share/doc /usr/share/man /usr/share/info /usr/share/doc-base /usr/share/systemd /var/lib/apt/lists /var/lib/mysql" \
     RO_SLAVE=1 \
-    HEALTH_API_PORT=63306
+    HEALTH_API_PORT=63306 \
+    MASTER_HOST=''
 
 ADD my.cnf /root/.my.cnf
 
