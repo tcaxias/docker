@@ -20,9 +20,6 @@ filebeat.prospectors:
     pattern: '^\[[a-z]+:[a-z]+,'
     negate: true
     match: after
-  fields:
-    environment:    ${ENV:testing}
-    host:           ${HOST:localhost}
 
 - paths:
     - /opt/couchbase/var/lib/couchbase/logs/goxdcr.log
@@ -34,9 +31,6 @@ filebeat.prospectors:
     - /tmp/supervisord.log
   encoding: utf-8
   document_type: couchbase
-  fields:
-    environment:    ${ENV:testing}
-    host:           ${HOST:localhost}
 
 output.console:
   enabled: ${CONSOLE_LOGS:true}
