@@ -21,8 +21,8 @@ filebeat.prospectors:
     negate: true
     match: after
   fields:
-    env:       ${ENV:testing}
-    host:      ${HOST:localhost}
+    environment:    ${ENV:testing}
+    host:           ${HOST:localhost}
 
 - paths:
     - /opt/couchbase/var/lib/couchbase/logs/goxdcr.log
@@ -35,8 +35,8 @@ filebeat.prospectors:
   encoding: utf-8
   document_type: couchbase
   fields:
-    env:       ${ENV:testing}
-    host:      ${HOST:localhost}
+    environment:    ${ENV:testing}
+    host:           ${HOST:localhost}
 
 output.console:
   enabled: ${CONSOLE_LOGS:true}
