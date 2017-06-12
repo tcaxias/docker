@@ -1,4 +1,4 @@
-filebeat.prospectors:
+yumfilebeat.prospectors:
 - paths:
     - /opt/couchbase/var/lib/couchbase/logs/babysitter.log
     - /opt/couchbase/var/lib/couchbase/logs/couchdb.log
@@ -22,11 +22,27 @@ filebeat.prospectors:
     match: after
 
 - paths:
-    - /opt/couchbase/var/lib/couchbase/logs/goxdcr.log
-    - /opt/couchbase/var/lib/couchbase/logs/http_access.log
-    - /opt/couchbase/var/lib/couchbase/logs/http_access_internal.log
     - /opt/couchbase/var/lib/couchbase/logs/indexer.log
     - /opt/couchbase/var/lib/couchbase/logs/projector.log
+  encoding: utf-8
+  document_type: couchbase
+  multiline:
+    pattern: '^[0-9]{4}-[0-9]{2}-[0-9]{2}T'
+    negate: true
+    match: after
+
+- paths:
+    - /opt/couchbase/var/lib/couchbase/logs/goxdcr.log
+  encoding: utf-8
+  document_type: couchbase
+  multiline:
+    pattern: '^[a-z]+ [0-9]{4}-[0-9]{2}-[0-9]{2}T'
+    negate: true
+    match: after
+
+- paths:
+    - /opt/couchbase/var/lib/couchbase/logs/http_access.log
+    - /opt/couchbase/var/lib/couchbase/logs/http_access_internal.log
     - /opt/couchbase/var/lib/couchbase/logs/query.log
     - /tmp/supervisord.log
   encoding: utf-8
