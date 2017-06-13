@@ -1,4 +1,4 @@
-yumfilebeat.prospectors:
+filebeat.prospectors:
 - paths:
     - /opt/couchbase/var/lib/couchbase/logs/babysitter.log
     - /opt/couchbase/var/lib/couchbase/logs/couchdb.log
