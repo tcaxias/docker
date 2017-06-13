@@ -1,0 +1,16 @@
+filebeat.prospectors:
+- paths:
+    - /var/log/mysql/*slow.log
+  encoding: utf-8
+  document_type: mysql_slow_log
+  exclude_lines: ['^# Time:']
+  multiline:
+    pattern: '^# User@Host'
+    negate: true
+    match: after
+  fields:
+    env:       ${ENV:testing}
+    host:      ${HOST:localhost}
+
+output.console:
+  enabled: ${CONSOLE_LOGS:true}
