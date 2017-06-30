@@ -3,7 +3,7 @@ FROM tcaxias/debian
 MAINTAINER Tiago Caxias http://github.com/tcaxias
 
 ENV \
-    PKGS="percona-xtrabackup-24 mariadb-server-10.1 supervisor filebeat wget pigz apt-transport-https haproxy proxysql" \
+    PKGS="percona-xtrabackup-24 mariadb-server-10.1 supervisor filebeat wget pigz apt-transport-https" \
     DEPS="git golang-1.7-go wget apt-transport-https ca-certificates" \
     GO="/usr/lib/go-1.7/bin/go" \
     GOPATH="/tmp/go" \
@@ -46,15 +46,18 @@ RUN \
     find / -name "*.a" -exec rm -f {} \;
 
 ADD \
-    utils/mysql_monitor.sh \
+    filebeat.yml \
     utils/supervisord.conf \
+    /etc/
+
+ADD \
+    utils/mysql_monitor.sh \
     utils/start_mysql.sh \
     /app/
 RUN chmod +x *.sh
 
 # filebeat doesn't get killed by supervisor properly - this is a simple fix
 RUN sed -i -r -e 's#^/usr#exec /usr#' /usr/bin/filebeat.sh
-ADD filebeat.yml /etc/
 
 VOLUME [ "/var/lib/mysql", "/var/log/mysql", "/etc/mysql/conf.d", "/var/run/mysqld" ]
 EXPOSE 3306 63306
