@@ -6,4 +6,4 @@ RUN chmod 644 /etc/default/logstash
 USER logstash
 CMD \
     . /etc/default/logstash \
-    && exec /usr/share/logstash/bin/logstash "--path.settings" "/etc/logstash"  "-b" "2000"
+    && exec /usr/share/logstash/bin/logstash --path.settings /etc/logstash  -b 2000
