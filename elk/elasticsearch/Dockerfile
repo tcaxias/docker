@@ -1,13 +1,10 @@
 FROM tcaxias/elk-java
 
 ENV \
-    ES_SKIP_SET_KERNEL_PARAMETERS=true 
+    ES_SKIP_SET_KERNEL_PARAMETERS=true
 
-RUN \
-    $APT install elasticsearch \
-    && chmod 644 /etc/default/elasticsearch
-
-USER elasticsearch
+RUN $APT install elasticsearch
+RUN chmod 644 /etc/default/elasticsearch
 
 ENV \
     ES_HOME=/usr/share/elasticsearch \
@@ -16,8 +13,10 @@ ENV \
     LOG_DIR=/var/log/elasticsearch \
     PID_DIR=/var/run/elasticsearch
 
+USER elasticsearch
 CMD \
-    exec /usr/share/elasticsearch/bin/elasticsearch \
+    . /etc/default/elasticsearch \
+    && exec /usr/share/elasticsearch/bin/elasticsearch \
         -p ${PID_DIR}/elasticsearch.pid \
         -Edefault.path.logs=${LOG_DIR} \
         -Edefault.path.data=${DATA_DIR} \
