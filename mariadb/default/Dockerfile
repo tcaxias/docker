@@ -61,4 +61,4 @@ RUN sed -i -r -e 's#^/usr#exec /usr#' /usr/bin/filebeat.sh
 
 VOLUME [ "/var/lib/mysql", "/var/log/mysql", "/etc/mysql/conf.d", "/var/run/mysqld" ]
 EXPOSE 3306 63306
-CMD [ "supervisord", "-c", "/app/supervisord.conf", "-j", "/dev/shm/supervisor.pid", "-l", "/dev/null" ]
+CMD [ "supervisord", "-c", "/etc/supervisord.conf", "-j", "/dev/shm/supervisor.pid", "-l", "/dev/null" ]
