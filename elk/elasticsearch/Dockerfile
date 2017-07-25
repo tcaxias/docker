@@ -19,7 +19,8 @@ RUN echo "elasticsearch soft memlock unlimited" >> /etc/security/limits.conf
 
 USER elasticsearch
 CMD \
-    . /etc/default/elasticsearch \
+    ulimit -n 65536 \
+    && . /etc/default/elasticsearch \
     && exec /usr/share/elasticsearch/bin/elasticsearch \
         -p ${PID_DIR}/elasticsearch.pid \
         -Edefault.path.logs=${LOG_DIR} \
