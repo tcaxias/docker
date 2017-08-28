@@ -1,7 +1,7 @@
 filebeat.prospectors:
 - paths:
     - /var/log/mysql/*slow.log
-  ignore_older: 5s
+  ignore_older: 6m
   encoding: utf-8
   document_type: mysql_slow_log
   exclude_lines: ['^# Time:']
