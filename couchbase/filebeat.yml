@@ -14,6 +14,7 @@ filebeat.prospectors:
     - /opt/couchbase/var/lib/couchbase/logs/views.log
     - /opt/couchbase/var/lib/couchbase/logs/xdcr_errors.log
     - /opt/couchbase/var/lib/couchbase/logs/xdcr_trace.log
+  ignore_older: 5s
   encoding: utf-8
   document_type: couchbase
   multiline:
@@ -24,6 +25,7 @@ filebeat.prospectors:
 - paths:
     - /opt/couchbase/var/lib/couchbase/logs/indexer.log
     - /opt/couchbase/var/lib/couchbase/logs/projector.log
+  ignore_older: 5s
   encoding: utf-8
   document_type: couchbase
   multiline:
@@ -33,6 +35,7 @@ filebeat.prospectors:
 
 - paths:
     - /opt/couchbase/var/lib/couchbase/logs/goxdcr.log
+  ignore_older: 5s
   encoding: utf-8
   document_type: couchbase
   multiline:
@@ -45,6 +48,7 @@ filebeat.prospectors:
     - /opt/couchbase/var/lib/couchbase/logs/http_access_internal.log
     - /opt/couchbase/var/lib/couchbase/logs/query.log
     - /tmp/supervisord.log
+  ignore_older: 5s
   encoding: utf-8
   document_type: couchbase
 
