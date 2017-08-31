@@ -10,18 +10,20 @@ else
     IP=$(hostname -i)
 fi
 
-if [ ! -f /app/config/server.custom.properties ] ; then
-
-    sed -r /app/config/server.properties \
+if [ ! -f /app/config/server.properties ] ; then
+    sed -r /app/config/server.properties.tmpl \
         -e "s|(broker.id=0)|broker.id.generation.enable = true|" \
         -e "s|(zookeeper.connect=)localhost:2181|\1$ZK_HOSTS|" \
         -e "s|#(listeners=PLAINTEXT:)//:9092|\1//0.0.0.0:9092|" \
         -e "s|#(advertised.listeners=PLAINTEXT:)//your.host.name:9092|\1//$IP:9092|" \
-        | grep -v \# > /app/config/server.custom.properties
-    echo 'delete.topic.enable=true' >> /app/config/server.custom.properties
+        | grep -v \# > /app/config/server.properties
+    echo 'delete.topic.enable=true' >> /app/config/server.properties
 fi
 
-echo '{ "kafka_path": "/app", "log_path": "/tmp/kafka-logs", "zk_path": "'$ZK_HOSTS'" }' \
+ZK_PATH=$(fgrep "zookeeper.connect=" /app/config/server.properties|cut -d= -f2)
+LOG_PATH=$(fgrep "log.dirs=" /app/config/server.properties|cut -d= -f2)
+
+echo '{ "kafka_path": "/app", "log_path": "'$LOG_PATH'", "zk_path": "'$ZK_PATH'" }' \
     > /etc/kafkatcfg
 
-exec /app/bin/kafka-server-start.sh /app/config/server.custom.properties
+exec /app/bin/kafka-server-start.sh /app/config/server.properties
