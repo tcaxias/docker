@@ -13,7 +13,6 @@ ENV \
     SCALA_VERSION="2.12" \
     KAFKA_VERSION="0.11.0.0" \
     KAFKA_MIRROR="http://mirrors.fe.up.pt/pub/apache" \
-    GRADLE_VERSION="4.1" \
     ZK_HOSTS="127.0.0.1:2181" \
     GEMS="kafkat"
 
@@ -28,18 +27,11 @@ RUN \
     mv kafka_*/* . && \
     mv /app/config/server.properties /app/config/server.properties.tmpl && \
     rm -rf kafka_* && \
-    cd /tmp && \
-    wget https://services.gradle.org/distributions/gradle-${GRADLE_VERSION}-bin.zip && \
-    unzip gradle-${GRADLE_VERSION}-bin.zip && \
-    git clone https://github.com/airbnb/kafka-statsd-metrics2.git && \
-    cd kafka-statsd-metrics2 && \
-    ../gradle-${GRADLE_VERSION}/bin/gradle && \
-    cp -a build/libs /app/ && \
-    cd / && \
-    rm -rf /tmp/* && \
+    wget https://repo1.maven.org/maven2/io/prometheus/jmx/jmx_prometheus_javaagent/0.6/jmx_prometheus_javaagent-0.6.jar && \
+    wget https://raw.githubusercontent.com/prometheus/jmx_exporter/master/example_configs/kafka-0-8-2.yml && \
     apk del $DEPS
 
 ADD start_kafka.sh /app/
 
-EXPOSE 9092
+EXPOSE 9092 7071
 CMD /bin/bash /app/start_kafka.sh

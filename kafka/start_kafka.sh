@@ -26,4 +26,5 @@ LOG_PATH=$(fgrep "log.dirs=" /app/config/server.properties|cut -d= -f2)
 echo '{ "kafka_path": "/app", "log_path": "'$LOG_PATH'", "zk_path": "'$ZK_PATH'" }' \
     > /etc/kafkatcfg
 
-exec /app/bin/kafka-server-start.sh /app/config/server.properties
+KAFKA_OPTS="$KAFKA_OPTS -javaagent:/app/jmx_prometheus_javaagent-0.6.jar=7071:/app/kafka-0-8-2.yml" \
+    exec /app/bin/kafka-server-start.sh /app/config/server.properties
