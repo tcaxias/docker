@@ -1,6 +1,6 @@
 # You may find kafka at https://git-wip-us.apache.org/repos/asf?p=kafka.git
 # You may find airbnb's kafkat at https://github.com/airbnb/kafkat
-FROM alpine:edge
+FROM alpine
 
 MAINTAINER Tiago Caxias http://github.com/tcaxias
 
