@@ -1,13 +1,13 @@
-FROM openjdk:8-alpine
+FROM alpine
 
 WORKDIR /app
 
 ENV \
     DEPS="wget" \
-    PKGS="bash" \
+    PKGS="bash openjdk8-jre-base" \
     ZK_HOSTS="zk.zookeeper:2181" \
     APK="apk --update --no-cache" \
-    VERSION="1.3.1.8"
+    VERSION="1.3.3.13"
 
 RUN \
     $APK add $DEPS $PKGS && \
