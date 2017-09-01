@@ -3,7 +3,7 @@ FROM alpine
 WORKDIR /app
 
 ENV \
-    DEPS="wget" \
+    DEPS="wget openjdk8" \
     PKGS="bash openjdk8-jre-base" \
     ZK_HOSTS="zk.zookeeper:2181" \
     APK="apk --update --no-cache" \
