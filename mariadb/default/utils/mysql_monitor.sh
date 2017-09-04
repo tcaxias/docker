@@ -22,12 +22,8 @@ if [ "_$RECOVER_FROM" != '_' ] && [ ! -f '/var/lib/mysql/replicating_from' ]; th
 fi
 
 while sleep 2; do
-    if [ $RO_SLAVE = "1" ]; then
+    if [ ! "$RO_SLAVE" = "1" ]; then
         :
-    elif ! $mysql -e"show slave status\G" | fgrep -q Master_Host && \
-            $mysql -Nrse"select * from information_schema.processlist where command='binlog dump'" | \
-            fgrep -q Dump; then
-        $mysql -e'set global read_only=0;'
     elif $mysql -e"show slave status\G" | fgrep -q Master_Host; then
         $mysql -e'set global read_only=1;'
     fi
