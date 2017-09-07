@@ -14,6 +14,7 @@ ENV \
     KAFKA_VERSION="0.11.0.0" \
     KAFKA_MIRROR="http://mirrors.fe.up.pt/pub/apache" \
     ZK_HOSTS="127.0.0.1:2181" \
+    IP="127.0.0.1" \
     GEMS="kafkat"
 
 RUN $APK add $PKGS
@@ -34,4 +35,4 @@ RUN \
 ADD start_kafka.sh /app/
 
 EXPOSE 9092 7071
-CMD /bin/bash /app/start_kafka.sh
+CMD exec /bin/bash /app/start_kafka.sh
