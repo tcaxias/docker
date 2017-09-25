@@ -17,4 +17,6 @@ RUN \
     gem install $GEMS --no-ri --no-rdoc && \
     apk --no-cache del $DEPS
 
+ADD fluent.conf /etc/
+
 CMD ["fluentd", "-qc", "/etc/fluent.conf"]
