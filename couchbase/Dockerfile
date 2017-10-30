@@ -1,4 +1,4 @@
-FROM couchbase:community
+FROM couchbase:community-4.5.1
 
 ENV \
     PKGS="python-setuptools filebeat" \
