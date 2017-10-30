@@ -6,7 +6,7 @@ ENV \
     region="eu-central-1" \
     stream_name="fluentd" \
     aws_key_id="" \
-    aws_sec_id="" \
+    aws_sec_key="" \
     PKGS="ruby ruby-irb" \
     DEPS="ruby-dev build-base zlib-dev" \
     GEMS="fluentd fluent-plugin-kinesis json fluent-plugin-record-modifier \

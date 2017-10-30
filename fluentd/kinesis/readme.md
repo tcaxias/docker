@@ -7,4 +7,4 @@ You may run this with
     OR
 
     docker run --net host -d --name=fluentd -e stream_name=test -e region=eu-central-1 \
-    -e aws_key_id=123345987DFG -e aws_sec_id=ABCDEFGHTWER tcaxias/fluentd-kinesis
+    -e aws_key_id=123345987DFG -e aws_sec_key=ABCDEFGHTWER tcaxias/fluentd-kinesis
