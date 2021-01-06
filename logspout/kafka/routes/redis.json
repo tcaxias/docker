@@ -1,5 +1,0 @@
-{
-  "adapter": "kafka",
-  "filter_sources": ["stdout" ,"stderr"],
-  "address": "127.0.0.1:9092/redis"
-}

@@ -1,6 +1,3 @@
-# Dockerfiles I'm using currently
+# Archived
 
-Old ones will get deleted and evicted from docker hub.
-Please find the container builds for these at https://hub.docker.com/r/tcaxias/
-
-License ISC unless specified otherwise
+This is not being used anymore, original code in `master` branch.
